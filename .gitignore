@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+# Generated Doc
+*.pdf
+*/*.pdf
+
+# Emacs backup files
+*~
+*/*~
