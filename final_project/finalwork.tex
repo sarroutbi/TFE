@@ -7,7 +7,7 @@
 \author{Sergio Arroutbi Braojos}
 \selectlanguage{spanish}
 \date{\today}
-\usepackage[bottom=14em]{geometry}
+\usepackage[bottom=10em]{geometry}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{pdflscape}
@@ -105,63 +105,44 @@ Como ya se expuso anteriormente, este tipo de modelos son de sencilla implementa
 
 Las categorías que este modelo propone son las siguientes:
 \begin{enumerate}
-\item{Funcionalidad}. Grado de cumplimiento de las funcionalidades requeridas.
-\item{Usabilidad}. Desde el punto de vista de experiencia de usuario, tiempops de instalación y configuración, etc.
-\item{Calidad}. Orientado a número de releases, parches, bugs críticos abiertos o tiempo de resolución de los mismos.
-\item{Seguridad}. Número de vulnerabilidades moderadas y/o críticas en determinados períodos de tiempo.
-\item{Rendimiento}. Disponibilidad de benchmarks, configuración de performance+tuning, etc.
-\item{Escalabilidad}. De forma que se establezca si el software está bien adaptado para ser escalado.
-\item{Arquitectura}. Se contemplan, dentro de esta categoría, aspectos como la existencia de plugins de terceros, o si se proporcionan APIs (Application Program Interface)
-\item{Soporte}. Se evalúan aspectos como la actividad en las listas de correo del proyecto, o la existencia de soporte profesional y su calidad.
-\item{Documentación}. Existencia de documentación variada, desde manuales de usuario, instalación, administración, despliegue o guías de desarrollo.
-\item{Adopción}. Esta categoría plantea la existencia de libros en torno al proyecto, o bien la existencia de una base de usuarios real medible.
-\item{Comunidad}. Aspectos como el número de contribuidores únicos de código en los últimos meses son los que se contemplan en esta categoría del modelo.
-\item{Profesionalismo}. En esta categoría se analizan aspectos como la existencia de un lídel del proyecto o la dificultad que se presenta a la hora de entrar en el equipo de desarrollo.
+\item{\underline{Funcionalidad}}. Grado de cumplimiento de las funcionalidades requeridas.
+\item{\underline{Usabilidad}}. Desde el punto de vista de experiencia de usuario, tiempops de instalación y configuración, etc.
+\item{\underline{Calidad}}. Orientado a número de releases, parches, bugs críticos abiertos o tiempo de resolución de los mismos.
+\item{\underline{Seguridad}}. Número de vulnerabilidades moderadas y/o críticas en determinados períodos de tiempo.
+\item{\underline{Rendimiento}}. Disponibilidad de benchmarks, configuración de performance+tuning, etc.
+\item{\underline{Escalabilidad}}. De forma que se establezca si el software está bien adaptado para ser escalado.
+\item{\underline{Arquitectura}}. Se contemplan, dentro de esta categoría, aspectos como la existencia de plugins de terceros, o si se proporcionan APIs (Application Program Interface)
+\item{\underline{Soporte}}. Se evalúan aspectos como la actividad en las listas de correo del proyecto, o la existencia de soporte profesional y su calidad.
+\item{\underline{Documentación}}. Existencia de documentación variada, desde manuales de usuario, instalación, administración, despliegue o guías de desarrollo.
+\item{\underline{Adopción}}. Esta categoría plantea la existencia de libros en torno al proyecto, o bien la existencia de una base de usuarios real medible.
+\item{\underline{Comunidad}}. Aspectos como el número de contribuidores únicos de código en los últimos meses son los que se contemplan en esta categoría del modelo.
+\item{\underline{Profesionalismo}}. En esta categoría se analizan aspectos como la existencia de un lídel del proyecto o la dificultad que se presenta a la hora de entrar en el equipo de desarrollo.
 \end{enumerate}
 
 Como puede observarse en la descripición de la categoría, si bien este modelo no recoge métricas específicas del código fuente, la parte más interesante que presenta es la evaluación de las métricas que realiza, debido, básicamente, a tres aspectos:
 \begin{enumerate}
-\item{Sencillez}. Este modelo plantea un modo muy sencillo de evaluación de las métricas basado en puntuación más ponderación de cada una de ellas.
-\item{Flexibilidad}. La posibilidad de ponderación de cada una de las categorías y subcategorías permite al usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad.
-\item{Extensibilidad}. El planteamiento que permite este modelo y la fácil implementación de su evaluación permiten extender la evaluación mediante, simplemente, añadir o eliminar categorías o subcategorías según se establezca que es necesario para el usuario final.
+\item{\textbf{Sencillez}}. Este modelo plantea un modo muy sencillo de evaluación de las métricas basado en puntuación más ponderación de cada una de ellas.
+\item{\textbf{Flexibilidad}}. La posibilidad de ponderación de cada una de las categorías y subcategorías permite al usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad.
+\item{\textbf{Extensibilidad}}. El planteamiento que permite este modelo y la fácil implementación de su evaluación permiten extender la evaluación mediante, simplemente, añadir o eliminar categorías o subcategorías según se establezca que es necesario para el usuario final.
 \end{enumerate}
 
 Por tanto, si bien OpenBRR no realizar un análisis de métricas de código fuente, su filosofía y la fácil implementación de métricas que el modelo propone pueden servir perfectamente en la evaluación del modelo de calidad del código fuente.
 
-\item{QSOS~\cite{qsos:qsos} (Qualification and Selection of Opensource Software}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. 
-%– QSOS [5]. Qualification and Selection of Opensource Software is a Quality
-%Model, licensed under GNU Free Documentation License.
-%8The quality model defines what is named as the “QSOS Manifesto”, which
-%establishes a list of statements for the objectives that this Quality Model tries
-%to define, that can be summarized in:
-%∗ Analyzing needs and limitations in software adoption
-%∗ Evaluating functional and technical requirements
-%∗ Formalizing a methodology
-%∗ Results reusing
-%∗ Providing a free method
-%Based on this manifesto, QSOS defines an iterative process that consist of four
-%independent steps:
-%∗ Definition. Define a frame of references, with software families, types of
-%licenses, types of communities, etc.
-%∗ Evaluation. An Evaluation sheet is defined to evaluate the functional
-%coverage and the risks that are to be considered from both user and service
-%provider perspectives.
-%∗ Qualification. This step define filters that take into account needs and
-%limitations on the specific context of the project.
-%∗ Selection. Identify software meeting the needs and/or requirements. Com-
-%pare software and target selection.
-%To summarize, this model, despite the fact that is a light-weight model, is,
-%somehow, a more difficult model to implement compared to OpenBRR. Apart
-%from that, OpenBRR, having the possibility to assign different weights makes
-%OpenBRR a more flexible model, more malleable to the necessities and priorities
-%of a particular role or a particular company.
-%• Heavy-weight: This kind of Quality Models are complex and not easily imple-
-%mentable. A good example of this kind of project is QualOSS.
+\item{QSOS~\cite{qsos:qsos} (Qualification and Selection of Opensource Software}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. Básicamente, este manifiesto establece una serie de puntos que definen el modelo de calidad, resumidos en los siguientes objetivos principales:
+\begin{enumerate}
+\item{Análisis de necesidades y limitaciones en la adopción del software}.
+\item{Evaluación funcional y de requisitos técnicos}.
+\item{Formalización de metodología}.
+\item{Proporción de un método libre}.
+\end{enumerate}
+Basado en dichos objetivos principales, QSoS define un proceso iterativo que consiste en cuatro puntos independientes para llevar a cabo el modelo de calidad.
+
+Teniendo en cuenta que el objetivo de este documento no es realizar un análisis detallado de cada uno de los modelos de evaluación de código fuente, puede destacarse, de forma muy resumida, que si bien QSoS es considerado un modelo de evaluación ligero, su implementación es más complicada respecto a OpenBRR. Además, al igual que ocurría con OpenBRR, carece de métricas específicas de calidad de software desde el punto de vista del código fuente. Por tanto, este modelo de calidad no añade ninguna mejora respecto a lo ofrecido por OpenBRR.
 \end{itemize}
 
-\subsubsection{Modelos Pesados de Análisis de Calidad del Software Libre}.
+\subsubsection{Modelos Pesados de Análisis de Calidad del Software Libre}
 \begin{itemize}
-\item{QualOSS}.
+\item{QualOSS}
 %– QualOSS [6]: Quality of Open Source Software. Started on 2006 and funded
 %mainly by the European Union, this project aimed to fill the gap in the state of
 %the art of the Quality Models for Open Source Project Evaluation.
