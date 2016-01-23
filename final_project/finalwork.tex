@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+%Gummi|061|=)
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\title{\textbf{Medición de calidad de código en proyectos Open Source en base a métricas}}
+\author{Sergio Arroutbi Braojos}
+\selectlanguage{spanish}
+\date{\today}
+\usepackage[bottom=14em]{geometry}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+
+\begin{document}
+
+\hypersetup
+{   
+pdfborder={0 0 0}
+}
+   
+\maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Introducción}
+
+Este documento es una aproximación al mundo de la calidad en el software y, más en concreto, en el código fuente del software libre. La calidad del software es medible, así como también lo es el código fuente que permite construir dicho software. Se define como calidad del software al campo de estudio que describe aquellos atributos de los productos software que son deseables.
+Para medir la calidad del código fuente, la utilización de las métricas es fundamental. Se conoce como métrica de software a aquella medida cuantitativa que permite conocer en qué grado un sistema, componente o proceso cumple un atributo determinado ~\cite{ieeeglossary:softwareengineeringterminology}.
+Las métricas se han convertido en un ornamento más dentro de las suites de herramientas de gestión del ciclo de vida de desarrollo, proporcionando de un solo vistazo la salud del proyecto a través de paneles de métricas.
+El principal problema viene a la hora de conocer qué métricas son más importantes, cuáles lo son menos, cuáles deben tener un seguimiento diario, etc. ~\cite{abistock:usingmetrics}
+La pretensión de este documento es, en la medida de lo posible, y de forma gradual, intentar llegar a aclarar parte de estos conceptos.
+
+\subsection{Objetivos}
+A continuación se definen los objetivos de este documento:
+\begin{itemize}
+\item{El objetivo de este documento es, en primer lugar, enumerar la existencia de algunos modelos de calidad en el software libre, exponiendo qué carencias muestran a la hora de analizar el código fuente.}
+\item{Tras ello, se popondrá un método ligero que permita establecer métricas de análisis de código fuente que permita comparar la calidad de proyectos y justificar qué métricas se definen y en base a qué se evalúan dichas métricas. La principal idea no es llegar a un método eficiente, sino más bien justificar la selección y ponderación de las diversas métricas en base a determinados criterios, de forma que se llegue a la personalización de un modelo de calidad propio para el código fuente}.
+\item{Por otro lado, se realizará el estudio, integración e implementación de las herramientas que permitan aglutinar las métricas definidas, así como ponderar cada una de las mismas, para llegar a una evaluación final. Se evaluarán las herramientas existentes en el estado del arte, se realizarán los pasos que permitan integrarlas entre sí y se implmentará un mecanismo que permita su ejecución y sincronización. Se contemplarán, además, aquellas limitaciones existentes, cómo afectan al modelo de calidad establecido y, en qué forma, se podría modificar el modelo para ajustarlo a las herramientas disponibles y al estado del arte de las mismas}.
+\item{Finalmente, se realizará un ejemplo práctico de análisis de proyectos de software libre, de forma que se muestre la aplicación del método a través de las herramientas estudiadas para su comparativa. Así, se expondrá la comparativa entre diversos proyectos, de forma que se evalúen dos proyectos de similares características entre sí. Por otro lado, se establecerá el análisis para dos versiones de un mismo proyecto. Esto permitirá conocer el estado del proyecto desde el punto de vista del estado su calidad en función de la progresión del proyecto en el tiempo}.
+\end{itemize}
+
+\subsection{Estructura del documento}
+Para acometer los objetivos previamente descritos, este documento sigue la siguiente estructura:
+
+\begin{enumerate}
+\item{Introducción}. Se establecerá una introducción con un resumen de los contenidos del documento. Así se enumerarán en este apartado la misión del documento, los objetivos que éste pretende así como la estructura del documento para enumerar los mismos.
+\item{Modelo de Calidad}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos de software libre, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
+Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
+Finalmente, en este apartado se debería describir un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de las métricas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y porqué.
+\item{Herramientas}. Este apartado permitirá que se describan aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. Además, se mostrarán diversas gráficas y/o reportes comparativos de la calidad del código para un determinado proyectos.
+Así, se podrá mostrar de forma gráfica una comparativa de aquellas métricas más determinantes del sujeto a analizar.
+\item{Caso práctico:MongoDB vs. rethinkdb vs. arangodb}. En este apartado se realizará el análisis de dos o más proyectos Open Source cualesquiera, de un tamaño similar en líneas de código, escritos en C++. De esta forma, se popdrán concretar los aspectos vistos anteriormente en una comparativa real.
+Un ejemplo posible es la comparativa entre bases de datos NoSQL escritas en C++, como pueden ser MongoDB, rethinkdb y arangodb, aunque hay otras opciones. Se puede realizar de igual forma en este apartado más de una comparativa. Se intentará, en todo caso, buscar proyectos escritos en c++, de naturalezas similares, que permitan realizar una comparativa en función de las distintas métricas anteriores.
+\item{Mejoras y posibles trabajos futuros}. Finalmente, dentro de esta sección, se recogerán mejoras y posibles trabajos futuros que se podrían realizar para mejorar o extender lo que se haya realizado en este proyecto. Se contemplarán, por tanto, opciones de extender el modelo de calidad con más métricas, o bien incluir aspectos que no se han contemplado, extender el modelo para más lenguajes de programación, etc.
+\end{enumerate}
+
+\section{Modelo de Calidad}
+
+\subsection{Métricas de diseño orientado a objetos}
+
+\subsubsection{Acoplamiento}
+\subsubsection{Cohesión}
+\subsubsection{Encapsulación}
+\subsubsection{Herencia}
+\subsubsection{Complejidad de clases}
+\subsubsection{Abstracción}
+\subsubsection{Estabilidad}
+
+\subsection{Métricas de calidad de código de clases}
+\subsubsection{Número de métodos por clase}
+\subsubsection{Número de atributos por clase}
+
+\subsection{Métricas de calidad de código funcional}
+\subsubsection{Número de parámetros por método}
+\subsubsection{Longitud de métodos}
+\subsubsection{Complejidad ciclomática}
+\subsubsection{Formateo de código}
+\subsubsection{Comentarios de código}
+
+\section{Herramientas}
+
+\subsection{Extracción de métricas}
+
+\subsubsection{cccc}
+
+\subsubsection{cppdepend}
+
+\subsubsection{Sonar}
+
+\section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
+
+\subsection{Análisis de la calidad del código}
+
+Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre los diversos proyectos a analizar.
+
+\subsection{Histórico de calidad del código}
+
+A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está 
+
+\section{Mejoras y posibles trabajos futuros}
+
+\bibliographystyle{alpha}
+\bibliography{bibliography}
+\label{Bibliography}
+
+\end{document}
