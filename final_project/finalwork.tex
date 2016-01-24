@@ -43,8 +43,8 @@ La pretensión de este documento es, en la medida de lo posible, y de forma grad
 \subsection{Objetivos}
 A continuación se definen los objetivos de este documento:
 \begin{itemize}
-\item{El objetivo de este documento es, en primer lugar, enumerar la existencia de algunos modelos de calidad en el software libre, exponiendo qué carencias muestran a la hora de analizar el código fuente.}
-\item{Tras ello, se popondrá un método ligero que permita establecer métricas de análisis de código fuente que permita comparar la calidad de proyectos y justificar qué métricas se definen y en base a qué se evalúan dichas métricas. La principal idea no es llegar a un método eficiente, sino más bien justificar la selección y ponderación de las diversas métricas en base a determinados criterios, de forma que se llegue a la personalización de un modelo de calidad propio para el código fuente}.
+\item{El objetivo de este documento es, en primer lugar, enumerar la existencia de algunos modelos de calidad en el software libre, exponiendo qué carencias muestran a la hora de analizar el código fuente}.
+\item{Tras ello, se popondrá un método ligero que permita establecer métricas de análisis de código fuente que permita comparar la calidad de proyectos y justificar qué métricas se definen y en base a qué se evalúan dichas métricas. La principal idea no es llegar a un método eficiente, sino más bien justificar la selección y ponderación de las diversas métricas en base a determinados criterios, de forma que se llegue a la personalización de un modelo de calidad propio para el código fuente. Esto permitirá, además, realizar un repaso por los conceptos más importantes relacionados con el diseño orientado a objetos (acoplamiento, cohesión, encapsulación, modularidad, jerarquía, herencia, etc.)}.
 \item{Por otro lado, se realizará el estudio, integración e implementación de las herramientas que permitan aglutinar las métricas definidas, así como ponderar cada una de las mismas, para llegar a una evaluación final. Se evaluarán las herramientas existentes en el estado del arte, se realizarán los pasos que permitan integrarlas entre sí y se implmentará un mecanismo que permita su ejecución y sincronización. Se contemplarán, además, aquellas limitaciones existentes, cómo afectan al modelo de calidad establecido y, en qué forma, se podría modificar el modelo para ajustarlo a las herramientas disponibles y al estado del arte de las mismas}.
 \item{Finalmente, se realizará un ejemplo práctico de análisis de proyectos de software libre, de forma que se muestre la aplicación del método a través de las herramientas estudiadas para su comparativa. Así, se expondrá la comparativa entre diversos proyectos, de forma que se evalúen dos proyectos de similares características entre sí. Por otro lado, se establecerá el análisis para dos versiones de un mismo proyecto. Esto permitirá conocer el estado del proyecto desde el punto de vista del estado su calidad en función de la progresión del proyecto en el tiempo}.
 \end{itemize}
@@ -162,7 +162,7 @@ En esta sección se ha realizado un repaso de los modelos de calidad existentes 
 
 \begin{enumerate}
 \item{\textbf{Sencillez}}. El modelo elegido debe ser sencillo en su aplicación. De esta forma, se podrá asegurar su utilización en un mayor número de entornos.
-\item{\textbf{Flexibilidad}}. La posibilidad de ponderación de cada una de las métricas elegidas, ya sea a través de una propuesta de categorías y subcategorías, en la forma en la que lo hace OpenBRR, y permitiral usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad en la aplicación del modelo, es una característica muy recomendable a implementar en el modelo de calidad.
+\item{\textbf{Flexibilidad}}. La posibilidad de ponderación de cada una de las métricas elegidas, ya sea a través de una propuesta de categorías y subcategorías, en la forma en la que lo hace OpenBRR, y permitir al usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad en la aplicación del modelo, es una característica muy recomendable a implementar en el modelo de calidad.
 \item{\textbf{Extensibilidad}}. El modelo propuesto debe permitir, de forma sencilla, ser extendido con métricas no contempladas. De esta forma, se favorecerá en el modelo la aplicación de cambios para extender el conjunto de categorías y subcategorías de métricas y su posterior evaluación.
 \item{\textbf{Automatización}}. Cabe destacar que, a la hora de implementar el modelo, es recomendable adecuar éste para poder automatizar la obtención de resultados. Si bien el modelo puede quedar planteado a través de una hoja de cálculo, sería deseabe establecer un mini-framework de herramientas, a través de scripting o de la implementación de una suite de llamadas a herramientas, de forma que se pudiera automatizar la evaluación de la calidad cumpliendo las características anteriores.
 \end{enumerate}
@@ -171,11 +171,42 @@ Una vez establecidas las características básicas del modelo, es deseable reali
 
 \subsection{Métricas de diseño orientado a objetos}
 
+En el apartado de métricas de software orientado a objetos, cabe destacar que hay diversos aspectos a estudiar a la hora de establecer la calidad. A lo largo del tiempo, estas métricas se están usando de forma incremental tanto para evaluar como para predecir la calidad ~\cite{oometrics:introduction}. Un gran número de resultados empíricos soportan la valided de estas métricas ~\cite{validation:oodesignasqualityindicators}, y de forma habitual se usan como un indicador temprano de atributos a los que está relacionada la métrica, como puedan ser la robustez, la mantenibilidad o la propensión a fallos, ya que normalmente, éstos últimos, no pueden ser evaluados hasta una etapa muy tardía dentro del proceso de desarrollo software.
+
+Las métricas descritas en este punto están tomadas del conjunto de métricas MOOD ~\cite{mood:metricsset}. A continuación se exponen las diversas métricas a considerar:
+
 \subsubsection{Acoplamiento}
+En 1974, Stevens et. al definieron el acoplamiento como ``la medida de fuerza de asociación establecida por la conexión de un módulo a otro''~\cite{structuredesign:coupling}. Básicamente, el acoplamiento define la interdependencia entre dos objetos. Los objetos A y B están acoplados si un método del objeto A llama a un método del objeto B. Normalmente, un acoplamiento excesivo indica una encapsulación débil y puede afectar a la reutilización del módulo.
+
 \subsubsection{Cohesión}
+El concepto de cohesión se refiere a cuan relacionadas están los métodos y atributos de una clase con respecto al resto, esto es, el grado en que los métodos están relacionados con las variables de una clase. El LOCOM (Lack of Cohesion) es una medida que establece el conjunto de métodos locales disjuntos entre sí.
+
+La Cohesión puede medirse de varias formas. Un método para poder medir la cohesión es calcular qué porcentaje de métdos utiliza cada una de las variables y hacer una media de dichos porcentajes.
+
+Una alta cohesión implica una buena subdivisión de clases, mientras que una baja cohesión incrementa la complejidad, aumentando la probabilidad de errores, y es, sin duda, indicativo de un mal diseño y de futuros problemas en la reusabilidad. Las clases poco cohesivas deben ser partidas en clases con más cohesión.
+
 \subsubsection{Encapsulación}
+La ocultación de información es un mecanismo de diseño que permite que únicamente un subconjunto de sus métodos son conocidos por los usuarios del módulo. La ocultación de información da lugar a la encapsulación en los lenguajes orientados a objetos. Se considera que los programas con un buen nivel de encapsulación son más fáciles de modificar (hasta en un factor 4) respecto a los programas que no lo son \cite{improving:softwareproductivity}.
+
+Básicamente, la encapsulación se proporciona a través de dos métricas:
+
+\begin{itemize}
+\item{AHF (Attribute Hiding Factor)}. Referencia a la invisibilidad de los atributos de una clase para el resto de clases. Lo ideal es que este valor sea de un 100\% (las clases externas no pueden acceder a ningún atributo de la clase).
+\item{MHF (Method Hiding Factor)}. Referencia a la invisibilidad de los métodos de una clase para el resto de clases. La ocultación de métodos incrementa la reusabilidad de otras aplicaciones y reduce la complejidad.
+\end{itemize}
+
 \subsubsection{Herencia}
-\subsubsection{Complejidad de clases}
+La herencia de objetos decrementa la complejidad a través de la reducción del número de operaciones, pero es un tipo de relación entre clases que puede complicar el diseño y el mantenimiento. Se utilizan básicamente dos métricas en torno a la herencia:
+
+\begin{itemize}
+\item{DIT (Depth of Inheritance Tree)}. Se define como la profundidad máxima de una clase nodo (que no tiene más clases hijas) dentro del árbol jerárquico de herencia. Cuanto más profunda una clase dentro de una herencia de clases, mayor número de métodos y atributos hereda, haciendo más complejo su diseño, su mantenimiento y su propensión a errores. 
+\item{NOC (Number of Children)}. Esta métrica define directamente el número de subclases de una clase. Las clases que tienen un gran número de hijos se consideran difícil a la hora de modificar y se consideran más complejas y propensas a errores.
+\end{itemize}
+
+\subsubsection{Complejidad de clase}
+
+El concepto de complejidad de clase viene directamente definido por la métrica WMC (Weighted Methods/Class). Este valor directamente relaciona la cantidad de métodos que tiene una clase. A mayor número de métodos, mayor complejidad (siempre que se tenga un valor razonable que no haga que las clases sean clases perezosas).
+
 \subsubsection{Abstracción}
 \subsubsection{Estabilidad}
 
@@ -191,19 +222,17 @@ Una vez establecidas las características básicas del modelo, es deseable reali
 \subsubsection{Formateo de código}
 \subsubsection{Comentarios de código}
 
-\subsection{Propuesta de Modelo de Calidad}
+\section{Propuesta de Modelo de Calidad}
 
 \section{Herramientas}
 
-\subsection{Extracción de métricas}
+\subsection{cccc}
 
-\subsubsection{cccc}
+\subsection{cppdepend}
 
-\subsubsection{cppdepend}
+\subsection{cpd}
 
-\subsubsection{cpd}
-
-\subsubsection{Sonar}
+\subsection{Sonar}
 
 \section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
 
