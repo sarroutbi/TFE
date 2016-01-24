@@ -91,7 +91,7 @@ Antes de hablar de los modelos existentes, cabe destacar que existen dos tipos d
 Como ya se expuso anteriormente, este tipo de modelos son de sencilla implementación. Así, establecer la calidad de un proyecto de Software Libre puede llegar a ser tan sencillo como rellenar una Hoja de Cálculo con diversas preguntas y ponderar los resultados resultantes. Éste el es caso de OpenBRR.
 
 \begin{itemize}
-\item{OpenBRR~\cite{openbrr:openbrr}} (Open Business Readiness Rating). Pese a que en la actualidad se está migrando a un modelo más evolucionado, conocido como OSSpal~\cite{osspal:osspal}, este modelo de calidad ha sido, sin duda, el más sencillo de implementar de los existentes en la actualidad. Como ya se ha comentado, básicamente es una hoja de cálculo que define una serie de super-atributos (conocidos también en el modelo como categorías), con una serie de subcategorías, que no son más que métricas aplicadas a cada una de las categorías. El usuario puede establecer diferentes pesos tanto a la categoría como a las subcategorías. El modelo establece, finalmente, la puntuación final en función de los pesos asignados por el usuario. En la siguiente figura se muestra una de las múltiples categorías del modelo:
+\item{OpenBRR} (Open Business Readiness Rating). Pese a que en la actualidad se está migrando a un modelo más evolucionado, conocido como OSSpal~\cite{osspal:osspal}, este modelo de calidad ha sido, sin duda, el más sencillo de implementar de los existentes en la actualidad. Como ya se ha comentado, básicamente es una hoja de cálculo que define una serie de super-atributos (conocidos también en el modelo como categorías), con una serie de subcategorías, que no son más que métricas aplicadas a cada una de las categorías. El usuario puede establecer diferentes pesos tanto a la categoría como a las subcategorías. El modelo establece, finalmente, la puntuación final en función de los pesos asignados por el usuario. En la siguiente figura se muestra una de las múltiples categorías del modelo:
 
 \begin{center}
  \begin{figure}[H]
@@ -158,7 +158,16 @@ La metodología utilizada por este proyecto consistía básicamente en:
 
 Como puede observarse, este método hace una especial incidencia en las métricas. Sin embargo, debido, entre otros factores, a la finalización del proyecto y la no disponibilidad de las métricas en cuestión que se plantearon, unido al hecho de que se trata de una metodología pesada, no se puede considerar QualOSS como un modelo del que se puedan aprovechar ciertas herramientas o planteamientos. Sin embargo, el caracter de automatización que plantea en torno a la obtención de métricas es, sin duda, otro factor importante que también debe ser tenido en cuenta. 
 
-\subsection{Propuesta de modelo de calidad}
+En esta sección se ha realizado un repaso de los modelos de calidad existentes en la evaluación de proyectos de Software Libre. Si bien los modelos de calidad no son directamente aplicables, debido al hecho de que carecen de métricas específicas de calidad en el código fuente, cabe destacar que para la implementación de un modelo de calidad de este tipo algunas de las características de los modelos anteriores son deseables:
+
+\begin{enumerate}
+\item{\textbf{Sencillez}}. El modelo elegido debe ser sencillo en su aplicación. De esta forma, se podrá asegurar su utilización en un mayor número de entornos.
+\item{\textbf{Flexibilidad}}. La posibilidad de ponderación de cada una de las métricas elegidas, ya sea a través de una propuesta de categorías y subcategorías, en la forma en la que lo hace OpenBRR, y permitiral usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad en la aplicación del modelo, es una característica muy recomendable a implementar en el modelo de calidad.
+\item{\textbf{Extensibilidad}}. El modelo propuesto debe permitir, de forma sencilla, ser extendido con métricas no contempladas. De esta forma, se favorecerá en el modelo la aplicación de cambios para extender el conjunto de categorías y subcategorías de métricas y su posterior evaluación.
+\item{\textbf{Automatización}}. Cabe destacar que, a la hora de implementar el modelo, es recomendable adecuar éste para poder automatizar la obtención de resultados. Si bien el modelo puede quedar planteado a través de una hoja de cálculo, sería deseabe establecer un mini-framework de herramientas, a través de scripting o de la implementación de una suite de llamadas a herramientas, de forma que se pudiera automatizar la evaluación de la calidad cumpliendo las características anteriores.
+\end{enumerate}
+
+Una vez establecidas las características básicas del modelo, es deseable realizar un estudio de las principales métricas existentes en el análisis del código fuente, tanto desde el punto de vista del diseño orientado a objetos como desde el punto de vista de análisis de código funcional, para establecer en qué medida estas métricas afectan a la calidad y, de esta forma, evaluar el posible impacto de las métricas en el modelo elegido.
 
 \subsection{Métricas de diseño orientado a objetos}
 
@@ -175,11 +184,14 @@ Como puede observarse, este método hace una especial incidencia en las métrica
 \subsubsection{Número de atributos por clase}
 
 \subsection{Métricas de calidad de código funcional}
+\subsubsection{Código duplicado}
 \subsubsection{Número de parámetros por método}
 \subsubsection{Longitud de métodos}
 \subsubsection{Complejidad ciclomática}
 \subsubsection{Formateo de código}
 \subsubsection{Comentarios de código}
+
+\subsection{Propuesta de Modelo de Calidad}
 
 \section{Herramientas}
 
