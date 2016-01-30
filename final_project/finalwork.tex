@@ -12,6 +12,7 @@
 \usepackage{mathtools}
 \usepackage{pdflscape}
 \usepackage{float}
+\usepackage{mathtools}
 
 \begin{document}
 
@@ -54,11 +55,13 @@ Para acometer los objetivos previamente descritos, este documento sigue la sigui
 
 \begin{enumerate}
 \item{\underline{Introducción}}. Se establecerá una introducción con un resumen de los contenidos del documento. Así se enumerarán en este apartado la misión del documento, los objetivos que éste pretende así como la estructura del documento para enumerar los mismos.
-\item{\underline{Modelo de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos de software libre, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
+\item{\underline{Modelos de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos de software libre, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
 Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
-Finalmente, en este apartado se debería describir un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de las métricas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y porqué.
-\item{\underline{Herramientas}}. Este apartado permitirá que se describan aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. Además, se mostrarán diversas gráficas y/o reportes comparativos de la calidad del código para un determinado proyectos.
-Así, se podrá mostrar de forma gráfica una comparativa de aquellas métricas más determinantes del sujeto a analizar.
+Finalmente, en este apartado se debería describir las caracterías que un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de éstas últimas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y porqué.
+\item{\underline{Herramientas}}. Este apartado permitirá que se describan aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. 
+Además, se mostrarán diversas gráficas y/o reportes comparativos de la calidad del código para un determinado proyecto. Así, se podrá mostrar de forma gráfica una comparativa de aquellas métricas más determinantes del sujeto a analizar.
+Este apartado permitirá ver el estado del arte de las herramientas de análisis de métricas para, de esta forma, empezar a establecer cuáles de ellas se van a utilizar a la hora de establecer el modelo de calidad propuesto.
+\item{\underline{Propuesta de un modelo de calidad}}. Esta sección permitirá establecer, en base a los dos capítulos anteriores, un modelo de calidad de software orientado a métricas. De esta forma se elaborará un modelo, iterativo e incremental, que permitirá establecer las métricas a evaluar, las herramientas que permitan dicha evaluación y la ponderación de cada una de las métricas y/o grupos de métricas.
 \item{\underline{Caso práctico: MongoDB vs. rethinkdb vs. arangodb}}. En este apartado se realizará el análisis de dos o más proyectos Open Source cualesquiera, de un tamaño similar en líneas de código, escritos en C++. De esta forma, se popdrán concretar los aspectos vistos anteriormente en una comparativa real.
 Un ejemplo posible es la comparativa entre bases de datos NoSQL escritas en C++, como pueden ser MongoDB, rethinkdb y arangodb, aunque hay otras opciones. Se puede realizar de igual forma en este apartado más de una comparativa. Se intentará, en todo caso, buscar proyectos escritos en c++, de naturalezas similares, que permitan realizar una comparativa en función de las distintas métricas anteriores.
 \item{\underline{Mejoras y posibles trabajos futuros}}. Finalmente, dentro de esta sección, se recogerán mejoras y posibles trabajos futuros que se podrían realizar para mejorar o extender lo que se haya realizado en este proyecto. Se contemplarán, por tanto, opciones de extender el modelo de calidad con más métricas, o bien incluir aspectos que no se han contemplado, extender el modelo para más lenguajes de programación, etc.
@@ -82,16 +85,16 @@ Si bien los objetivos de este documento no son realizar un estudio detallado de 
 Antes de hablar de los modelos existentes, cabe destacar que existen dos tipos de modelos de calidad a la hora de evaluar proyectos de Software Libre:
 
 \begin{itemize}
-\item{Modelos de calidad ligeros}. Este tipo de modelos son de una implementación más ligera y sencilla respecto a los pesados. Ejemplos de este tipo de modelo son OpenBRR y QSoS.
-\item{Modelos de calidad pesados}. Este tipo de modelos, de mayor complejidad y dificultad en su implementación, son considerados más exactos en cuanto a la extensión de su estudio en torno al software.
+\item{\underline{Modelos de calidad ligeros}}. Este tipo de modelos son de una implementación más ligera y sencilla respecto a los pesados. Ejemplos de este tipo de modelo son OpenBRR y QSoS.
+\item{\underline{Modelos de calidad pesados}}. Este tipo de modelos, de mayor complejidad y dificultad en su implementación, son considerados más exactos en cuanto a la extensión de su estudio en torno al software.
 \end{itemize}
 
-\subsubsection{Modelos Ligeros de Análisis de Calidad del Software Libre}.
+\subsubsection{Modelos Ligeros de Análisis de Calidad del Software Libre}
 
 Como ya se expuso anteriormente, este tipo de modelos son de sencilla implementación. Así, establecer la calidad de un proyecto de Software Libre puede llegar a ser tan sencillo como rellenar una Hoja de Cálculo con diversas preguntas y ponderar los resultados resultantes. Éste el es caso de OpenBRR.
 
 \begin{itemize}
-\item{OpenBRR} (Open Business Readiness Rating). Pese a que en la actualidad se está migrando a un modelo más evolucionado, conocido como OSSpal~\cite{osspal:osspal}, este modelo de calidad ha sido, sin duda, el más sencillo de implementar de los existentes en la actualidad. Como ya se ha comentado, básicamente es una hoja de cálculo que define una serie de super-atributos (conocidos también en el modelo como categorías), con una serie de subcategorías, que no son más que métricas aplicadas a cada una de las categorías. El usuario puede establecer diferentes pesos tanto a la categoría como a las subcategorías. El modelo establece, finalmente, la puntuación final en función de los pesos asignados por el usuario. En la siguiente figura se muestra una de las múltiples categorías del modelo:
+\item{\textbf{OpenBRR}} (Open Business Readiness Rating). Pese a que en la actualidad se está migrando a un modelo más evolucionado, conocido como OSSpal~\cite{osspal:osspal}, este modelo de calidad ha sido, sin duda, el más sencillo de implementar de los existentes en la actualidad. Como ya se ha comentado, básicamente es una hoja de cálculo que define una serie de super-atributos (conocidos también en el modelo como categorías), con una serie de subcategorías, que no son más que métricas aplicadas a cada una de las categorías. El usuario puede establecer diferentes pesos tanto a la categoría como a las subcategorías. El modelo establece, finalmente, la puntuación final en función de los pesos asignados por el usuario. En la siguiente figura se muestra una de las múltiples categorías del modelo:
 
 \begin{center}
  \begin{figure}[H]
@@ -128,7 +131,7 @@ Como puede observarse en la descripición de la categoría, si bien este modelo 
 
 Por tanto, si bien OpenBRR no realizar un análisis de métricas de código fuente, su filosofía y la fácil implementación de métricas que el modelo propone pueden servir perfectamente en la evaluación del modelo de calidad del código fuente.
 
-\item{QSOS~\cite{qsos:qsos} (Qualification and Selection of Opensource Software}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. Básicamente, este manifiesto establece una serie de puntos que definen el modelo de calidad, resumidos en los siguientes objetivos principales:
+\item{\textbf{QSOS}~\cite{qsos:qsos} (Qualification and Selection of Opensource Software}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. Básicamente, este manifiesto establece una serie de puntos que definen el modelo de calidad, resumidos en los siguientes objetivos principales:
 \begin{enumerate}
 \item{Análisis de necesidades y limitaciones en la adopción del software}.
 \item{Evaluación funcional y de requisitos técnicos}.
@@ -144,7 +147,7 @@ Teniendo en cuenta que el objetivo de este documento no es realizar un análisis
 
 Bajo este capítulo se expone, básicamente, el modelo QualOSS, modelo considerado como modelo pesado de evaluación de calidad en proyectos de Software Libre.
 \begin{itemize}
-\item{QualOSS~\cite{qualoss:qualoss} (Quality Of Open Source Software)}. Este modelo, fundado en 2006 y financiado principalmente por la unión europea, persiguió rellenar el hueco detectado en el estado del arte de los modelos de evaluación de calidad en el Software Libre.
+\item{\textbf{QualOSS}~\cite{qualoss:qualoss} (Quality Of Open Source Software)}. Este modelo, fundado en 2006 y financiado principalmente por la unión europea, persiguió rellenar el hueco detectado en el estado del arte de los modelos de evaluación de calidad en el Software Libre.
 
 Este método tiene como primera intención una automatización semi-completa del análisis de los proyectos y de la obtención de sus métricas, mediante la descarga a través de herramientas como FLOSS-metrics, junto a una serie de scripts que permitan la optimización de esta tarea.
 
@@ -165,6 +168,7 @@ En esta sección se ha realizado un repaso de los modelos de calidad existentes 
 \item{\textbf{Flexibilidad}}. La posibilidad de ponderación de cada una de las métricas elegidas, ya sea a través de una propuesta de categorías y subcategorías, en la forma en la que lo hace OpenBRR, y permitir al usuario establecer qué métricas y conjuntos de métricas son las que tienen más impacto a la hora de evaluar la calidad en la aplicación del modelo, es una característica muy recomendable a implementar en el modelo de calidad.
 \item{\textbf{Extensibilidad}}. El modelo propuesto debe permitir, de forma sencilla, ser extendido con métricas no contempladas. De esta forma, se favorecerá en el modelo la aplicación de cambios para extender el conjunto de categorías y subcategorías de métricas y su posterior evaluación.
 \item{\textbf{Automatización}}. Cabe destacar que, a la hora de implementar el modelo, es recomendable adecuar éste para poder automatizar la obtención de resultados. Si bien el modelo puede quedar planteado a través de una hoja de cálculo, sería deseabe establecer un mini-framework de herramientas, a través de scripting o de la implementación de una suite de llamadas a herramientas, de forma que se pudiera automatizar la evaluación de la calidad cumpliendo las características anteriores.
+\item{\textbf{Iterativo e incremental}}. Además de las características anteriores, es deseable que el modelo planteado se ajuste a un enfoque iterativo e incremental. Basado en las facultades anteriores, como son la sencillez, la flexibilidad y la extensibilidad, el modelo planteado será modficado y extendido para tratar de conseguir un modelo cada vez más robusto.
 \end{enumerate}
 
 Una vez establecidas las características básicas del modelo, es deseable realizar un estudio de las principales métricas existentes en el análisis del código fuente, tanto desde el punto de vista del diseño orientado a objetos como desde el punto de vista de análisis de código funcional, para establecer en qué medida estas métricas afectan a la calidad y, de esta forma, evaluar el posible impacto de las métricas en el modelo elegido.
@@ -205,17 +209,62 @@ La herencia de objetos decrementa la complejidad a través de la reducción del 
 
 \subsubsection{Complejidad de clase}
 
-El concepto de complejidad de clase viene directamente definido por la métrica WMC (Weighted Methods/Class). Este valor directamente relaciona la cantidad de métodos que tiene una clase. A mayor número de métodos, mayor complejidad (siempre que se tenga un valor razonable que no haga que las clases sean clases perezosas).
+El concepto de complejidad de clase viene directamente definido por la métrica WMC (Weighted Methods/Class). Este valor directamente enumera la cantidad de métodos que tiene una clase. 
+
+A mayor número de métodos, mayor complejidad (siempre que se tenga un valor razonable que no haga que las clases sean clases perezosas).
+
+Cabe destacar que, sin embargo, existen otras tendencias que establecen que es más recomendable tener un mayor número de métodos siempre y cuando estos sean sencillos ~\cite{refactoring:improvingdesign}
+
+\subsection{Métricas de calidad de código de paquetes de clases}
+
+\subsubsection{Estabilidad}
+Se conoce como estabilidad a aquella característica que define la dificultad que implica que un módulo de software cambie debido al uso que hacen otros módulos de él. ~\cite{unclebob:stabilityandabstraction}
+Para medir la estabilidad se establece una métrica opuesta, la inestabilidad, definida como:
+
+\begin{equation}
+I = \frac{Ce}{Ca + Ce}
+\end{equation}
+
+Donde:
+\begin{itemize}
+\item{Ca}: Es el número de clases, fuera del paquete a evaluar, que tienen dependencia con clases del paquete a evaluar
+\item{Ce}: Es el número de clases, dentro del paquete a evaluar, que tienen dependencia con clases externas del paquete a evaluar
+\end{itemize}
+
+Hay que destacar que la inestabilidad no es una característica a evitar, ya que si todos los paquetes fueran estables, el código sería difícil de modificar, algo que no es deseable. Simplemente hay que establecer en qué medida una clase estable debe cumplir otras características, como la abstracción, según se verá a continuación.
 
 \subsubsection{Abstracción}
-\subsubsection{Estabilidad}
+Debido a principios como DIP (Dependency Inversion Principle) ~\cite{unclebob:stabilityandabstraction}, se establece que ciertos paquetes tienen que proporcionar clases abstractas que permitan establecer la relación entre las clases de alto nivel y aquéllas sobre las que se apoyan y que implementan los detalles específicos.
 
-\subsection{Métricas de calidad de código de clases}
-\subsubsection{Número de métodos por clase}
-\subsubsection{Número de atributos por clase}
+Se define como la abstracción de un paquete a la relación existente entre el número de clases abstractas y el total de clases que contiene:
+
+\begin{equation}
+A = \frac{Abstract Classes}{Total Classes}
+\end{equation}
+
+Como se comentó anteriormente, la Abstracción y la Estabilidad están estrechamente ligadas, ya que es deseable que los paquetes estables sean cuanto más abstractos mejor.
+
+\subsubsection{Principio de Abstracciones Estables}
+
+Este principio establece que cuanto más estable es un paquete, mayor abstracción debe proporcionar. De esta forma, se establece una relación directa entre Abstracción e Inestabilidad, de forma que un paquete debe posicionarse en la recta principal que relaciona ambos términos. Así, existe una secuencia principal de relación entre ambos, así como la Distancia de la que se encuentra un paquete respecto a dicho valor. 
+
+\begin{equation}
+D = \frac{(A+I-1)}{\sqrt(2)}
+\end{equation}
+
+Dicha distancia tiene un valor entre 0 y \begin{equation} \frac{1}{\sqrt(2)} \end{equation}. Sin embargo, puede modificarse para dar un valir normalizado, conocido como D':
+
+\begin{equation}
+D = |A+I-1|
+\end{equation}
+
+Si la distancia es cero, los paquetes pueden considerarse fácilmente reusables y modificables. Si un paquete se aleja del valor Distancia igual a cero, entonces el paquete debe ser reestructurado.
 
 \subsection{Métricas de calidad de código funcional}
 \subsubsection{Código duplicado}
+
+La duplicación de código es el enemigo número uno de un sistema bien diseñado. Representa trabajo adicional, riesgo adicional y complejidad innecesaria. 
+\subsubsection{Código muerto}
 \subsubsection{Número de parámetros por método}
 \subsubsection{Longitud de métodos}
 \subsubsection{Complejidad ciclomática}
