@@ -295,6 +295,17 @@ Si bien un método no tiene porqué ser excesivamente complejo por ser muy largo
 
 Por tanto, el número de líneas de un método puede establecerse también como una métrica que posea un valor que cuanto menor sea, mejor.
 
+\subsubsection{Formato de código fuente}
+
+Hay que ser claro en el código fuente. Para ello, el formato de los ficheros de código fuente debe ser considerado como un factor importante, demasido importante para ignorarlo o para no ser considerado religiosamente ~\cite{unclebob:cleancode}.
+Respecto al formato que debe poseer el código fuente, resulta razonable que éste siga una serie de reglas para favorecer su legibilidad:
+
+\begin{itemize}
+\item{Anchura de líneas de código}. Tradicionalmente, la anchura de línea se limitaba a 80 (límite de Hollerith). Sin embargo, en la actualidad, con la anchura de los monitores actuales, anchuras de 100 y hasta 120 caracteres son razonables. Más de 120 caracteres de ancho empieza a ser ilegible.
+\item{Indentación}. Se debe perseguir una correcta indentación del código fuente. Más allá del número de caracteres a usar, al menos se debe procurar no romper la indentación.
+\item{Longitud de fichero}. A la hora de comprender el código, la utilización de ficheros de poca longitud también favorece la legibilidad del código.
+\end{itemize}
+
 \section{Herramientas}
 
 En el apartado anterior se han analizado algunas de las métricas más utilizadas a la hora de evaluar la calidad del software según diversos autores y métodos más o menos formales. Sin embargo, la medición de dichas métricas puede resultar ser de diversas complejidades, estar sujeta a distintos estados del arte en función de su madurez, etc.
@@ -308,6 +319,7 @@ Es deseable que las herramientas a analizar cumplan una serie de característica
 \item{\underline{Software Libre}}. El hecho de que las herramientas sean software libre favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
 \item{\underline{Automaticidad}}. Las herramientas utilizadas deben proporcionar mecanismos que favorezcan la automaticidad de su ejecución y de la extracción de los resultados.
 \item{\underline{Sistema Operativo Linux}}. Debido a sus características, que favorecen la automaticidad por su potente línea de comandos así como la disponibilidad de herramientas de Software Libre empaquetadas y su fácil instalación, es recomendable que las herramientas estén disponibles en el Sistema Operativo Linux.
+\item{\underline{Lenguaje C++}}. Debido a los contenidos estudiados en la materia sobre la que versa este trabajo, el lenguaje requerido para el que se obtendrán las métricas deberá ser C++.
 \end{itemize}
 
 Una vez conocidas las características básicas que deben cumplir las herramientas, se van a analizar algunas de las más utilizadas dentro del análisis de métricas software.
@@ -343,15 +355,29 @@ Se trata, por tanto, de una solución a evitar en el caso en el que se puedan ob
 
 \subsection{pmd / cpd}
 
-Esta suite de herramientas, opensource, permite realizar análisis estático de código para detectar, básicamente, código muerto y código duplicado. Incluye ejecución desde comando, está disponible en Linux e incluye soporte para varios lenguajes de programación.
+Esta suite de herramientas es un Software Libre que permite realizar análisis estático de código para detectar, básicamente, código muerto y código duplicado. Incluye ejecución desde comando, está disponible en Linux e incluye soporte para varios lenguajes de programación.
 
 Mientras que la suite global, pmd, permite realizar detección de código muerto mediante detección de objetos no utilizados, cpd está más centrado en la detección de código duplicado.
 
 Lamentablemente, la suite pmd no tiene reglas definidas para C++, aunque sí lo tiene cpd. Por tanto, esta herramienta puede utilizarse para la detección de código duplicado.
 
+\subsection{cppcheck}
+
+La herramienta cppcheck permite realizar análisis estático de código C++. Entre las distintas métricas, permite detectar errores de estilo o funciones que no se ejecutan nunca, lo que supone una métrica válida para analizar código muerto.
+
 \subsection{SonarQube}
 
-\section{Propuesta de Modelo de Calidad}
+SonarQube es una potente herramienta para la medición de calidad de un proyecto software. Posee plugins para varios lenguajes, entre ellos C++. Además, SonarQube permite utilizar diversas herramientas de obtención de métricas, como son cppcheck o Vera++ ó valgrind.
+
+SonarQube es una herramienta Open Source, permite ser extendida a través de plugins, y tiene una gran base de usuarios. Entre las posibles desventajas de este software, básicamente se encuentra el hecho de que la curva de aprendizaje es algo más pronunciada comparada con las herramientas anteriores. Finalmente, comentar que si bien no posee comandos específicos de uso desde la shell para la lectura de resultados, el hecho de que utilice una base de datos permite automatizar la extracción de métricas, así como su análisis y clasificación.
+
+\section{Propuestas de Modelo de Calidad}
+
+\subsection{Iteración 1}
+
+\subsection{Iteración 2}
+
+\subsection{Iteración 3}
 
 \section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
 
@@ -361,7 +387,17 @@ Esta sección permitirá concretar el modelo de calidad elegido sobre los proyec
 
 \subsection{Histórico de la calidad del código}
 
-A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está 
+A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está realizando el esfuerzo necesario en ir mejorando la calidad en función del modelo propuesto.
+
+\section{Conclusiones}
+
+La calidad del código fuente importa. Es clave para un proyecto de software que el código cumpla unos requisitos de calidad establecidos. Esta importancia se acentúa a la hora de evaluar proyectos de software libre, debido a la transparencia que supone la naturaleza de este tipo de proyectos, que por definición deben hacer que su código fuente sea accesible.
+
+A la hora de evaluar proyectos de software libre, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad de software libre utilizado. 
+
+Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de Software Libre, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
+
+La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer preferencias de métricas y su impacto en la calidad final.
 
 \section{Mejoras y posibles trabajos futuros}
 
