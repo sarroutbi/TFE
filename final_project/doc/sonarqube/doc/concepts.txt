@@ -1,0 +1,15 @@
+http://docs.sonarqube.org/display/SONAR/Concepts
+
+Publish:
+Default. Standard way to analyze the source code. The source code is analyzed and measures and issues are pushed to the SonarQube server and therefore stored in the database. The results of the analysis can be browsed through the web interface.
+Use this default mode when you want to keep the history of your analyses to monitor and manage your technical debt over time.
+
+Preview:	
+The source code is analyzed but no data is pushed to the SonarQube server. Therefore, nothing is available through the web interface. You can only get information about the issues that were found during the analysis.
+Use this mode when you want quick feedback about any issues that you might have introduced before pushing your modifications to the main code base. See all the possibilities in the "Pre-commit Check" documentation.
+
+Issues:
+This technical mode is for use by tools, and is similar to the "Preview" mode.
+You shouldn't need this mode unless you are developing a tool.
+
+sonar.analysis.mode=issues
