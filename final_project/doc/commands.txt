@@ -4,8 +4,15 @@ $ find . -iname "*cpp" -print | xargs cccc
 
 cpd:
 ----
-./run.sh cpd --failOnViolation true --minimum-tokens 100 --files  /home/sarroutbi/tmp/test_duplication/ --language cpp
+$ ./run.sh cpd --failOnViolation true --minimum-tokens 100 --files  /home/sarroutbi/tmp/test_duplication/ --language cpp
 
 vera:
 -----
-find . -iname "*cpp" -print  | xargs vera++ -c vera.xml
+$ find . -iname "*cpp" -print  | xargs vera++ -c vera.xml
+
+ - vera execution with particular profile:
+ -----------------------------------------
+ $ find arangod/ utils/ lib/ -iname "*cpp" -print  | xargs vera++ -p full-nobrackets -c vera/vera.xml -s
+   -> profiles, that can be selected by -p, are defined under:
+   /usr/lib/vera++/profiles/
+   (*) New profiles can be defined if needed, just check rules (man vera++)
