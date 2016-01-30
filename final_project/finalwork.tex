@@ -299,24 +299,55 @@ Por tanto, el número de líneas de un método puede establecerse también como 
 
 En el apartado anterior se han analizado algunas de las métricas más utilizadas a la hora de evaluar la calidad del software según diversos autores y métodos más o menos formales. Sin embargo, la medición de dichas métricas puede resultar ser de diversas complejidades, estar sujeta a distintos estados del arte en función de su madurez, etc.
 
-Este capítulo pretende realizar el análisis de diversas herramientas que permitan realizar el cálculo de las métricas anteriores para, posteriormente, conocer qué métricas pueden considerarse en el modelo de calidad y qué valores deben tener las mismas.
+Si bien no se desea realizar un estudio detallado de herramientas, este capítulo sí que pretende realizar un análisis superficial que permita establecer el cálculo de qué métricas de las anteriormente estudiadas pueden parsearse, para, posteriormente, conocer cuáles de ellas pueden considerarse en el modelo de calidad.
 
 Es deseable que las herramientas a analizar cumplan una serie de características:
 
 \begin{itemize}
-\item{Sencillez}. El ámbito de este documento implica tener que realizar la evaluación de un modelo de calidad establecido que busca, entre otras características, la sencillez. Por tanto, es deseable que las herramientas a utilizar sobre las que se apoyará la evaluación de éste también lo sean.
-\item{Software Libre}. El hecho de que las herramientas sean software libre favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
-\item{Automaticidad}. Las herramientas utilizadas deben proporcionar mecanismos que favorezcan la automaticidad de su ejecución y de la extracción de los resultados.
-\item{Sistema Operativo Linux}. Debido a sus características, que favorecen la automaticidad por su potente línea de comandos así como la disponibilidad de herramientas de Software Libre empaquetadas y su fácil instalación, es recomendable que las herramientas estén disponibles en el Sistema Operativo Linux.
+\item{\underline{Sencillez}}. El ámbito de este documento implica tener que realizar la evaluación de un modelo de calidad establecido que busca, entre otras características, la sencillez. Por tanto, es deseable que las herramientas a utilizar sobre las que se apoyará la evaluación de éste también lo sean.
+\item{\underline{Software Libre}}. El hecho de que las herramientas sean software libre favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
+\item{\underline{Automaticidad}}. Las herramientas utilizadas deben proporcionar mecanismos que favorezcan la automaticidad de su ejecución y de la extracción de los resultados.
+\item{\underline{Sistema Operativo Linux}}. Debido a sus características, que favorecen la automaticidad por su potente línea de comandos así como la disponibilidad de herramientas de Software Libre empaquetadas y su fácil instalación, es recomendable que las herramientas estén disponibles en el Sistema Operativo Linux.
 \end{itemize}
 
 Una vez conocidas las características básicas que deben cumplir las herramientas, se van a analizar algunas de las más utilizadas dentro del análisis de métricas software.
 
 \subsection{cccc}
 
+cccc~\cite{metrictools:cccc} es una herramienta que permite calcular diversas métricas de software. 
+
+Su funcionamiento es a través de la shell, lo que favorece su uso a la hora de automatizar su ejecución en un framework que lo contenga.
+
+Respecto a las métricas que permite calcular que son de interés según lo comentado anteriormente, se encuentran:
+
+\begin{itemize}
+\item{LOC (Lines of Code)}. Como medida básica, cccc permite extraer el número de líneas de código total, el número de líneas de código por clase o el número de líneas de código de cada método dentro de una clase.
+\item{Complejidad Ciclomática}. cccc permite evaluar la complejidad ciclomática total y por clase.
+\item{WMC}. La herramienta proporciona diversos valores de esta métrica, como son WMCv (número de funciones por otras clases) y WMC1 para el número total de funciones de una clase.
+\item{DIT y NOC}. La herramienta permite analizar, para una clase, la profundidad de su árbol de herencia y el número de hijos que tiene.
+\item{CBO (Coupling Between Objects)}. cccc proporciona el número de clases relacionados con una clase ya sea como cliente o como servidora.
+
+\end{itemize}
+
+En cuanto a la salida de las métricas, está disponible en formato .html, en formato .xml y en formato CSV. Por tanto, la extracción de las métricas puede ser parseada con un pequeño desarrollo.
+
+La única pega a la hora de utilizar esta herramienta es la no continuación de su desarrollo, puesto que parece que, lamentable, en 2013, su desarrollador principal dejó de mantenerla.
+
 \subsection{cppdepend}
 
-\subsection{cpd}
+cppdepend\~cite{metrictools:cppdepend} es una herramienta comercial que permite calcular hasta más de 82 métricas de software. Es, por tanto, una solución muy buena para obtención de diversas métricas en un modelo de calidad. Como nota adicional, esta herramienta puede ser utilizada desde la shell, permitiendo esto una integración en tareas de automatización de obtención de métricas.
+
+El principal problema que presenta es su naturaleza de software cerrado, que no permite extensiones. Además, su utilización no es simple, ya que precisa determinados ficheros "de proyecto" para obtener los ficheros que sirven como entrada a su generación. Su precio tampoco es muy accesible al menos en el mundo académico (499\$ en su versión más básica), tampoco la hace muy recomendable para el uso en el ámbito académico, aunque sí es una muy buena opción a la hora de utilizar en el mundo de la empresa.
+
+Se trata, por tanto, de una solución a evitar en el caso en el que se puedan obtener métricas suficientes a través de otras herramientas.
+
+\subsection{pmd / cpd}
+
+Esta suite de herramientas, opensource, permite realizar análisis estático de código para detectar, básicamente, código muerto y código duplicado. Incluye ejecución desde comando, está disponible en Linux e incluye soporte para varios lenguajes de programación.
+
+Mientras que la suite global, pmd, permite realizar detección de código muerto mediante detección de objetos no utilizados, cpd está más centrado en la detección de código duplicado.
+
+Lamentablemente, la suite pmd no tiene reglas definidas para C++, aunque sí lo tiene cpd. Por tanto, esta herramienta puede utilizarse para la detección de código duplicado.
 
 \subsection{SonarQube}
 
@@ -341,3 +372,4 @@ A través de las herramientas descritas anteriormente, se podrá realizar un an�
 \label{Bibliography}
 
 \end{document}
+ 
