@@ -260,20 +260,57 @@ D = |A+I-1|
 
 Si la distancia es cero, los paquetes pueden considerarse fácilmente reusables y modificables. Si un paquete se aleja del valor Distancia igual a cero, entonces el paquete debe ser reestructurado.
 
-\subsection{Métricas de calidad de código funcional}
+\subsection{Métricas de calidad de código fuente}
+
+Este apartado recoge una serie de características relacionadas con el desarrollo de software desde el punto de vista de programación estructurada. 
+
 \subsubsection{Código duplicado}
 
-La duplicación de código es el enemigo número uno de un sistema bien diseñado. Representa trabajo adicional, riesgo adicional y complejidad innecesaria. 
-\subsubsection{Código muerto}
-\subsubsection{Número de parámetros por método}
-\subsubsection{Longitud de métodos}
-\subsubsection{Complejidad ciclomática}
-\subsubsection{Formateo de código}
-\subsubsection{Comentarios de código}
+La duplicación de código es el enemigo número uno de un sistema bien diseñado. Representa trabajo adicional, riesgo adicional y complejidad innecesaria. \~cite{unclebob:cleancode}. El código duplicado debe ser modificado y refactorizado para evitar su duplicidad.
 
-\section{Propuesta de Modelo de Calidad}
+Si bien no existe una métrica específica, sí que debe asegurarse la no existencia de código duplicado dentro del software. Para ello deberán estudiarse las distintas herramientas que permitan detectar duplicidad en el código y establecer algún tipo de evaluación.
+
+\subsubsection{Código muerto}
+Se conoce como código muerto a aquél código existente que ya no se ejecuta por diversos motivos, tales como pueden ser cambios en diseño, condiciones que nunca se cumplen, etc. Este código todavía compila, pero es un "mal olor" del software. Si se identifica, debe ser retirado, puesto que "cuanto más tiempo esté, peor será su olor" \~cite{unclebob:cleancode}.
+
+Si bien no se definen métricas específicas, sí que pueden establecerse, por ejemplo, métricas del tipo ``líneas de código muerto que tiene un software respecto al número total de líneas'' o similares.
+
+\subsubsection{Número de parámetros por método}
+
+Cuanto menor es el número de argumentos de una función, mejor es la comprensión de ésta, ya que los argumentos conllevan un esfuerzo comprensivo. Funciones de más de tres argumentos deben evitarse, y las que tienen más de tres deben ser evitadas o muy justificadas.
+
+La métrica es sencilla, puesto que a menor número de argumentos, mejor.
+
+\subsubsection{Complejidad Ciclomática}
+
+La Complejidad Ciclomática es un término acuñado por McCabe en 1976~\cite{mccabe:acomplexitymeasure}, que permite establecer la complejidad de un método a través de una cifra basándose en la complejidad del grafo resultante de los posibles flujos de control de dicho método.
+
+Cuanto mayor complejidad ciclomática posee el código, menor será su mantenibilidad y más complejas serán las pruebas unitarias a realizar sobre el mismo. Es deseable que esta medida sea lo menor posible.
+
+\subsubsection{Longitud de métodos}
+
+Pese a que no hay una justificación razonable sobre la longitud que debeen poseer los métodos, muchos autores, basados en su experiencia, recomiendan que cuanto menor sea la longitud de un método mejor será su comprensión y su mantenibilidad ~\cite{unclebob:cleancode}.
+
+Si bien un método no tiene porqué ser excesivamente complejo por ser muy largo (un método de 200 líneas puede, por ejemplo, tener complejidad ciclomática 1), parece razonable que se parta la funcionalidad de dicho código en métodos más pequeños para mejorar su legibilidad. 
+
+Por tanto, el número de líneas de un método puede establecerse también como una métrica que posea un valor que cuanto menor sea, mejor.
 
 \section{Herramientas}
+
+En el apartado anterior se han analizado algunas de las métricas más utilizadas a la hora de evaluar la calidad del software según diversos autores y métodos más o menos formales. Sin embargo, la medición de dichas métricas puede resultar ser de diversas complejidades, estar sujeta a distintos estados del arte en función de su madurez, etc.
+
+Este capítulo pretende realizar el análisis de diversas herramientas que permitan realizar el cálculo de las métricas anteriores para, posteriormente, conocer qué métricas pueden considerarse en el modelo de calidad y qué valores deben tener las mismas.
+
+Es deseable que las herramientas a analizar cumplan una serie de características:
+
+\begin{itemize}
+\item{Sencillez}. El ámbito de este documento implica tener que realizar la evaluación de un modelo de calidad establecido que busca, entre otras características, la sencillez. Por tanto, es deseable que las herramientas a utilizar sobre las que se apoyará la evaluación de éste también lo sean.
+\item{Software Libre}. El hecho de que las herramientas sean software libre favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
+\item{Automaticidad}. Las herramientas utilizadas deben proporcionar mecanismos que favorezcan la automaticidad de su ejecución y de la extracción de los resultados.
+\item{Sistema Operativo Linux}. Debido a sus características, que favorecen la automaticidad por su potente línea de comandos así como la disponibilidad de herramientas de Software Libre empaquetadas y su fácil instalación, es recomendable que las herramientas estén disponibles en el Sistema Operativo Linux.
+\end{itemize}
+
+Una vez conocidas las características básicas que deben cumplir las herramientas, se van a analizar algunas de las más utilizadas dentro del análisis de métricas software.
 
 \subsection{cccc}
 
@@ -281,7 +318,9 @@ La duplicación de código es el enemigo número uno de un sistema bien diseñad
 
 \subsection{cpd}
 
-\subsection{Sonar}
+\subsection{SonarQube}
+
+\section{Propuesta de Modelo de Calidad}
 
 \section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
 
@@ -289,7 +328,7 @@ La duplicación de código es el enemigo número uno de un sistema bien diseñad
 
 Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre los diversos proyectos a analizar.
 
-\subsection{Histórico de calidad del código}
+\subsection{Histórico de la calidad del código}
 
 A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está 
 
