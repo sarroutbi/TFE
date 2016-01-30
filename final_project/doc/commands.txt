@@ -1,0 +1,11 @@
+cccc:
+-----
+$ find . -iname "*cpp" -print | xargs cccc
+
+cpd:
+----
+./run.sh cpd --failOnViolation true --minimum-tokens 100 --files  /home/sarroutbi/tmp/test_duplication/ --language cpp
+
+vera:
+-----
+find . -iname "*cpp" -print  | xargs vera++ -c vera.xml
