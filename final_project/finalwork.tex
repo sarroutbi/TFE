@@ -3,18 +3,25 @@
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{pdfpages}
-\title{\textbf{Medición de calidad de código en proyectos Open Source en base a métricas}}
-\author{Sergio Arroutbi Braojos}
-\selectlanguage{spanish}
-\date{\today}
 \usepackage[bottom=10em]{geometry}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{pdflscape}
 \usepackage{float}
 \usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{layout}
+
+\title{\textbf{Medición de calidad de código en proyectos Open Source en base a métricas}}
+\author{Sergio Arroutbi Braojos}
+\selectlanguage{spanish}
+\date{\today}
+\setlength{\footskip}{65pt}
 
 \begin{document}
+
+\renewcommand{\listtablename}{Lista de Tablas}
+\renewcommand{\tablename}{TABLA} 
 
 \hypersetup
 {   
@@ -26,6 +33,7 @@ pdfborder={0 0 0}
 \pagebreak
 
 \tableofcontents
+\listoftables
 
 \pagebreak
 
@@ -333,11 +341,11 @@ Su funcionamiento es a través de la shell, lo que favorece su uso a la hora de 
 Respecto a las métricas que permite calcular que son de interés según lo comentado anteriormente, se encuentran:
 
 \begin{itemize}
-\item{LOC (Lines of Code)}. Como medida básica, cccc permite extraer el número de líneas de código total, el número de líneas de código por clase o el número de líneas de código de cada método dentro de una clase.
-\item{Complejidad Ciclomática}. cccc permite evaluar la complejidad ciclomática total y por clase.
-\item{WMC}. La herramienta proporciona diversos valores de esta métrica, como son WMCv (número de funciones por otras clases) y WMC1 para el número total de funciones de una clase.
-\item{DIT y NOC}. La herramienta permite analizar, para una clase, la profundidad de su árbol de herencia y el número de hijos que tiene.
-\item{CBO (Coupling Between Objects)}. cccc proporciona el número de clases relacionados con una clase ya sea como cliente o como servidora.
+\item{\underline{LOC} (Lines of Code)}. Como medida básica, cccc permite extraer el número de líneas de código total, el número de líneas de código por clase o el número de líneas de código de cada método dentro de una clase.
+\item{\underline{Complejidad Ciclomática}}. cccc permite evaluar la complejidad ciclomática total y por clase.
+\item{\underline{WMC}}. La herramienta proporciona diversos valores de esta métrica, como son WMCv (número de funciones por otras clases) y WMC1 para el número total de funciones de una clase.
+\item{\underline{DIT} y \underline{NOC}}. La herramienta permite analizar, para una clase, la profundidad de su árbol de herencia y el número de hijos que tiene.
+\item{\underline{CBO} (Coupling Between Objects)}. cccc proporciona el número de clases relacionados con una clase ya sea como cliente o como servidora.
 
 \end{itemize}
 
@@ -347,7 +355,7 @@ La única pega a la hora de utilizar esta herramienta es la no continuación de 
 
 \subsection{cppdepend}
 
-cppdepend\~cite{metrictools:cppdepend} es una herramienta comercial que permite calcular hasta más de 82 métricas de software. Es, por tanto, una solución muy buena para obtención de diversas métricas en un modelo de calidad. Como nota adicional, esta herramienta puede ser utilizada desde la shell, permitiendo esto una integración en tareas de automatización de obtención de métricas.
+cppdepend~\cite{metrictools:cppdepend} es una herramienta comercial que permite calcular hasta más de 82 métricas de software. Es, por tanto, una solución muy buena para obtención de diversas métricas en un modelo de calidad. Como nota adicional, esta herramienta puede ser utilizada desde la shell, permitiendo esto una integración en tareas de automatización de obtención de métricas.
 
 El principal problema que presenta es su naturaleza de software cerrado, que no permite extensiones. Además, su utilización no es simple, ya que precisa determinados ficheros "de proyecto" para obtener los ficheros que sirven como entrada a su generación. Su precio tampoco es muy accesible al menos en el mundo académico (499\$ en su versión más básica), tampoco la hace muy recomendable para el uso en el ámbito académico, aunque sí es una muy buena opción a la hora de utilizar en el mundo de la empresa.
 
@@ -373,13 +381,77 @@ SonarQube es una herramienta Open Source, permite ser extendida a través de plu
 
 Dicho lo anterior, cabe destacar que SonarQube, en relación al lenguaje de programación C++, actúa más como un framework de visualización que como una herramienta. Así, su uso está más relacionado con la visualización de datos que con la propia generación de métricas.
 
-\section{Propuestas de Modelo de Calidad}
+\section{Propuesta de Modelo de Calidad}
 
-\subsection{Iteración 1}
+Una vez enumeradas las distintas herramientas disponibles, la funcionalidad que proporcionan y sus principales características, se ha realizado la siguiente propuesta de modelo de calidad. 
 
-\subsection{Iteración 2}
+El enfoque seguido ha sido un enfoque iterativo e incremental, en el que para las primeras iteraciones se ha realizado un análisis de las métricas de manera manual a través de una única herramienta, que en este caso ha sido \textbf{cccc}.
 
-\subsection{Iteración 3}
+Hay que destacar que, por facilidad a la hora de analizar los datos, algunos valores se han elegido de acuerdo a los valores propuestos por las herramientas. Por ejemplo, en el caso de la profundidad de jerarquía de herencia (DIT), la herramienta cccc avisa (WARNING) sobre valores mayores que 3 y menores o iguales a 6, y alerta (ERROR) sobre valores mayores o iguales a 7. De ahí que en la elección del modelo dichas cifras se hayan considerado como umbrales para cada uno de los valores. En todo caso, el peso de las métricas dentro de una categoría podrá variarse, al igual que se puede variar la ponderación de cada una de las categorías.
+
+En posteriores iteraciones, se han ido incorporando herramientas que han permitido ampliar el modelo de calidad y, por tanto, hacer que esta sea más completo. Además, se han ido incluyendo herramientas de scripting para automatizar la ejecución de los comandos sobre los diversos directorios.
+
+\subsection{Modelo de Calidad Propuesto}
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{ | p{1.6cm} | p{3cm} | p{8cm} | p{2cm} | }
+    \toprule
+    \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
+    \hline
+    WMC1 & Número de métodos por clase & Ninguna clase posee más de 30 métodos & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Existe únicamente una clase con más de 30 métodos pero ninguna con más de 100 métodos & 4 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 30 métodos pero ninguna con más de 100 métodos & 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe al menos una clase con más de 100 métodos & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 100 métodos & 0 \\ \cline{3-3}\cline{4-4}
+    \hline
+    WMCv & Número de métodos públicos por clase & Ninguna clase posee más de 10 métodos públicos & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Existe únicamente una clase con más de 10 métodos públicos pero ninguna con más de 30 métodos públicos & 4 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 10 métodos públicos pero ninguna con más de 30 métodos públicos & 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe al menos una clase con más de 30 métodos públicos & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 30 métodos públicos & 0 \\ \cline{3-3}\cline{4-4}
+    \hline
+    DIT & Profundidad de jerarquía en el árbol de herencia & Ninguna clase tiene una profundidad de jerarquía mayor que 3 & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Existe una clase con una profundidad de jerarquía de más de 3 & 4 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con una profundidad de jerarquía de más de 3  & 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe una clase con una profundidad de jerarquía de más de 6  & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con una profundidad de jerarquía de más de 6  & 0 \\ \cline{3-3}\cline{4-4}
+    \hline
+    CBO & Acoplamiento entre objetos & Todas las clases tienen un acoplamiento menor o igual a 12 & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Una clase tiene un acoplamiento mayor que 12 & 4 \\ \cline{3-3}\cline{4-4}
+    & & Varias clases tiene un acoplamiento mayor que 12 pero ninguna lo tiene mayor que & 3 \\ \cline{3-3}\cline{4-4}
+    & & Una clase tiene un acoplamiento mayor que 30 & 1 \\ \cline{3-3}\cline{4-4}
+    & & Varias clases tienen un acoplamiento mayor que 30 & 0 \\ 
+    \bottomrule
+    \end{tabular}
+    \caption{Especificación de Métricas de Diseño Orientado a Objetos}
+    \label{tab:metrics_ood}
+  \end{center}
+\end{table}
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{ | p{1.6cm} | p{3cm} | p{8cm} | p{2cm} | }
+    \toprule
+    \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
+    \hline
+    LOC & Número de líneas por clase & Ningua clase tiene más de 500 líneas de código & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Al menos una clase tiene más de 500 líneas de código pero ninguna de más de 2000 líneas & 4 \\ \cline{3-3}\cline{4-4}
+    & & Varias clases tienen más de 500 líneas de código, pero ninguna de más de 2000 líneas & 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe una clase de más de 2000 líneas de código & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 2000 líneas de código & 0 \\ \cline{3-3}\cline{4-4}
+    \hline
+    McCC & Complejidad Ciclomática de McCabe & Ninguna clase posee un valor complejidad superior 200 & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Existe al menos una clase con complejidad mayor de 200 pero ninguna superior a 1000 & 4 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con complejidad mayor de 200 pero ninguna superior a 1000 & 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe al menos una clase con complejidad superior a 1000 & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con complejidad superior a 1000 & 0 \\ \cline{3-3}\cline{4-4}
+    \bottomrule
+    \end{tabular}
+    \caption{Categoría: Métricas de Calidad Estrucutural de Código Fuente}
+    \label{tab:metrics_struct}
+  \end{center}
+\end{table}
 
 \section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
 
