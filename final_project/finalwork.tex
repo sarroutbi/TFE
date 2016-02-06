@@ -415,11 +415,11 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     & & Existen varias clases con más de 30 métodos públicos & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     DIT & Profundidad de jerarquía en el árbol de herencia & Ninguna clase tiene una profundidad de jerarquía mayor que 3 & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existen varias clases con una profundidad de jerarquía de más de 3  & 3 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con una profundidad de jerarquía de más de 3, pero ninguna clase tiene una profundiad de jerarquía mayor que 6 & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen varias clases con una profundidad de jerarquía de más de 6  & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     CBO & Acoplamiento entre objetos & Todas las clases tienen un acoplamiento menor o igual a 12 & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Varias clases tiene un acoplamiento mayor que 12 pero ninguna lo tiene mayor que & 3 \\ \cline{3-3}\cline{4-4}
+    & & Varias clases tiene un acoplamiento mayor que 12 pero ninguna lo tiene mayor que 30 & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen clases que tienen un acoplamiento mayor que 30 & 0 \\ 
     \bottomrule
     \end{tabular}
@@ -434,17 +434,17 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     \toprule
     \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
     \hline
-    LOC & Número de líneas por clase & Ningua clase tiene más de 500 líneas de código & 5 \\ \cline{3-3} \cline{4-4} 
+    LOC & Número de líneas por clase & Ninguna clase tiene más de 500 líneas de código & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existen clases que tienen más de 500 líneas de código, pero ninguna de más de 2000 líneas & 3 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con más de 2000 líneas de código & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existen clases con más de 2000 líneas de códigoCom & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     McCC & Complejidad Ciclomática de McCabe & Ninguna clase posee un valor complejidad superior 200 & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existen clases con complejidad mayor de 200 pero ninguna superior a 1000 & 3 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con complejidad superior a 1000 & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existen clases con complejidad superior a 1000 & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     DUP & Código Duplicado & No existe código duplicado de más de 100 tokens & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existe Código Duplicado de entre 100 y 500 tokens & 3 \\ \cline{3-3}\cline{4-4}
-    & & Existe Código Duplicado de entre 500 y 1000 tokens& 2 \\ \cline{3-3}\cline{4-4}
+    & & Existe Código Duplicado de entre 500 y 1000 tokens & 1 \\ \cline{3-3}\cline{4-4}
     & & Existe Código Duplicado de más de 1000 tokens & 0 \\ 
     \bottomrule
     \end{tabular}
@@ -460,8 +460,8 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
     \hline
     WID & Anchura de líneas de código & No existen ficheros con líneas más anchas de 100 caracteres & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existen líneas de más de 100 caracters, pero ninguna de más de 120 & 3 \\ \cline{3-3}\cline{4-4}
-    & & Existen líneas de más de 120 caracteres & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existen ficheros con líneas de más de 100 caracteres, pero ningún fichero con más de 120 & 3 \\ \cline{3-3}\cline{4-4}
+    & & Existen ficheros con líneas de más de 120 caracteres & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     TAB & No se deben utilizar tabuladores para identar el código & No existe ningún tabulador identando el código & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existen tabuladores en la identación del código & 0 \\ \cline{3-3} \cline{4-4}
@@ -482,6 +482,12 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
 Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre diversos proyectos, de temática similar, que estén desarrollados en C++ y que cuenten con un número de líneas de código similar entre sí, con diferencias de no más de un orden de magnitud.
 
 En esta ocasión, los proyectos elegidos han sido MongoDB (LOC=920K, LOC-C++=740K), rethinkdb (LOC=315K, LOC-C++=218K) y arangodb (LOC=3M, LOC-C++=1,8M). El modelo de calidad se aplicará únicamente sobre el código C++ del proyecto, ignorando otros lenguajes de programación o código que no pertenezca al proyecto, como puedan ser third parties.
+
+Respecto a las categorías propuestas en el modelo de calidad, no se han considerado valores de ponderación especiales para ninguna de ellas. Esto implica que las categorías ponderadas serán similares en el modelo de calidad, y por tanto la puntuación no se verá sometida a ajustes de ponderación. Sin embargo, hay que aclarar que los valores de ponderación deben ser considerados según los aspectos que considere el rol que evalúa los proyectos. Según los objetivos, puede ser más importante darle mayor peso a las métricas de una categoría particular, como puedan ser las métricas de Diseño Orientado a Objetos, por ejemplo. 
+
+Así mismo, la ponderación de métricas será equivalente dentro de cada una de las categorías. Al igual que ocurre con éstas últimas, en la evaluación que haga cada rol en situaciones de evaluación de calidad, se deberán considerar aquellos aspectos que puedan hacer que una categoría sume más que otra y su ponderación sea mayor respecto a otras. Dicho esto, en esta evaluación no se ha considerado ninguna métrica con más ponderación interna en la categoría.
+
+Una vez clarificados los puntos anteriores, la puntuación de cada uno de los proyectos será la que se muestra a continuación:
 
 \subsection{Histórico de la calidad del código}
 
