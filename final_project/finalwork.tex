@@ -494,7 +494,17 @@ Respecto a las categorías propuestas en el modelo de calidad, no se han conside
 
 Así mismo, la ponderación de métricas será equivalente dentro de cada una de las categorías. Al igual que ocurre con éstas últimas, en la evaluación que haga cada rol en situaciones de evaluación de calidad, se deberán considerar aquellos aspectos que puedan hacer que una categoría sume más que otra y su ponderación sea mayor respecto a otras. Dicho esto, en esta evaluación no se ha considerado ninguna métrica con más ponderación interna en la categoría.
 
-Como puede observarse en la evaluación de los proyectos que se mostrará a continuación, para los diferentes proyectos evaluados, el proyecto que más puntuación obtiene es RethinkDB, 2.14. En segundo lugar aparece el proyecto ArangoDB, con una puntuación de 1.5, mientras que MongoDB obtiene una puntuación de 1.25.
+Como puede observarse en la evaluación de los proyectos que se mostrará a continuación, para los diferentes proyectos evaluados, el proyecto que más puntuación obtiene es RethinkDB, 2.14. En segundo lugar aparece el proyecto ArangoDB, con una puntuación de 1.5, mientras que MongoDB obtiene una puntuación de 1.25. En la siguiente figura se muestra la comparativa de puntuación de los proyectos según las diversas categorías:
+
+\begin{center}
+ \begin{figure}[H]
+ \begin{center}
+   \includegraphics[width=16cm]{img/quality_evaluations.png}
+   \caption{Categoría OpenBRR}
+   \label{fig:openbrrcategory}
+ \end{center}
+ \end{figure}
+\end{center}
 
 La puntuación de cada uno de los proyectos, clasificadas por categorías, junto a las métricas de cada una de éstas y la ponderación de las mismas es la que se muestra a continuación \footnote{Pueden descargarse las hojas de cálculo en GitHub: https://github.com/sarroutbi/TFE.git, directorio ``evaluation sheets'' }:
 
@@ -658,18 +668,19 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
 
 La calidad del código fuente importa. Es clave para un proyecto de software que el código cumpla unos requisitos de calidad establecidos. Esta importancia se acentúa a la hora de evaluar proyectos de software libre, debido a la transparencia que supone la naturaleza de este tipo de proyectos, que por definición deben hacer que su código fuente sea accesible.
 
-A la hora de evaluar proyectos de software libre, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad de software libre utilizado. 
-
-Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de Software Libre, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
+A la hora de evaluar proyectos de software libre, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad de software libre utilizado. Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de Software Libre, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
 
 La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer preferencias de métricas y su impacto en la calidad final.
 
 \section{Mejoras y posibles trabajos futuros}
 
-Análisis de calidad con histórico de tiempo.
-Modificación de herramientas para extracción de métricas.
-Comparativa entre iteraciones de modelos de calidad.
-
+Como posibles mejoras se han identificado una serie de acciones que se pueden llevar a cabo para extender el trabajo anteriormente descrito:
+\begin{enumerate}
+\item{\underline{Modificación de herramientas para extracción de métricas}}. La utilización de herramientas de tipo Open Source abre la puerta a la extensión y/o mejora de éstas. Por ejemplo, se podría estudiar la extensión de \textbf{cccc} para hacer configurables los valores de ciertas métricas, ya que algunas de ellas son demasiado permisivas, como puede ser el número de métodos por clase. También se podría extender el tipo de métricas que esta herramienta proporciona.
+Igualmente, cabe la posibilidad de extender la herramienta \textbf{Vera++} para incluir nuevas métricas de formato de código, como pueda ser la utilización de variables de menos de N letras, y no ceñirse únicamente a la evaluación de nombres confusos.
+\item{\underline{Extensión del modelo de calidad}}. En otro orden de cosas, como mejora adicional, podría extenderse el modelo de calidad con más categorías y/o más métricas dentro de cada categoría, mediante la utilización de otras herramientas no contempladas en este documento, o bien a través de las modificaciones enumeradas en el punto anterior.
+\item{\underline{Automatización}}. Finalmente, pese a que para la selección de las herramientas se ha considerado la facilidad de uso de éstas para permitir la automatización de la extracción de las métricas, no se ha realizado dicha automatización como parte de este proyecto. Se propone, por tanto, como posible mejora, la realización de un framework que automatice total o parcialmente la obtención de las métricas y la generación de las puntuaciones del modelo de calidad.
+\end{enumerate}
 
 \pagebreak
 
