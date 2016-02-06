@@ -35,6 +35,7 @@ pdfborder={0 0 0}
 
 \tableofcontents
 \listoftables
+\listoffigures
 
 \pagebreak
 
@@ -486,7 +487,7 @@ Finalmente, para las métricas de código anteriores se puede utilizar la herram
 
 \subsection{Análisis de la calidad del código}
 
-Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre diversos proyectos, de temática similar, que estén desarrollados en C++ y que cuenten con un número de líneas de código similar entre sí, con diferencias de no más de un orden de magnitud.
+Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre diversos proyectos, de temática similar, en este caso, Bases de Datos de tipo NoSQL, que estén desarrollados en C++ y que cuenten con un número de líneas de código similar entre sí, con diferencias de no más de un orden de magnitud.
 
 En esta ocasión, los proyectos elegidos han sido MongoDB (LOC=920K, LOC-C++=740K), rethinkdb (LOC=315K, LOC-C++=218K) y arangodb (LOC=3M, LOC-C++=1,8M). El modelo de calidad se aplicará únicamente sobre el código C++ del proyecto, ignorando otros lenguajes de programación o código que no pertenezca al proyecto, como puedan ser \emph{third parties}.
 
@@ -500,8 +501,8 @@ Como puede observarse en la evaluación de los proyectos que se mostrará a cont
  \begin{figure}[H]
  \begin{center}
    \includegraphics[width=16cm]{img/quality_evaluations.png}
-   \caption{Categoría OpenBRR}
-   \label{fig:openbrrcategory}
+   \caption{Comparativa de Calidad de Proyectos}
+   \label{fig:quality_comparison}
  \end{center}
  \end{figure}
 \end{center}
