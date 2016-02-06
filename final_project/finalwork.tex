@@ -494,7 +494,9 @@ Respecto a las categorías propuestas en el modelo de calidad, no se han conside
 
 Así mismo, la ponderación de métricas será equivalente dentro de cada una de las categorías. Al igual que ocurre con éstas últimas, en la evaluación que haga cada rol en situaciones de evaluación de calidad, se deberán considerar aquellos aspectos que puedan hacer que una categoría sume más que otra y su ponderación sea mayor respecto a otras. Dicho esto, en esta evaluación no se ha considerado ninguna métrica con más ponderación interna en la categoría.
 
-Una vez clarificados los puntos anteriores, la puntuación de cada uno de los proyectos será la que se muestra a continuación:
+Como puede observarse en la evaluación de los proyectos que se mostrará a continuación, para los diferentes proyectos evaluados, el proyecto que más puntuación obtiene es RethinkDB, 2.14. En segundo lugar aparece el proyecto ArangoDB, con una puntuación de 1.5, mientras que MongoDB obtiene una puntuación de 1.25.
+
+La puntuación de cada uno de los proyectos, clasificadas por categorías, junto a las métricas de cada una de éstas y la ponderación de las mismas es la que se muestra a continuación:
 
 \begin{table}[H]
   \begin{center}
@@ -544,13 +546,113 @@ Una vez clarificados los puntos anteriores, la puntuación de cada uno de los pr
     \bottomrule
     \end{tabular}
     \caption{Puntuación Proyecto ArangoDB}
-    \label{tab:func_score}
+    \label{tab:arangodb_score}
   \end{center}
 \end{table}
 
-\subsection{Histórico de la calidad del código}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{ | p{3.4cm} | p{5cm} | p {1cm} | p{2.3cm} | p{2.1cm} | }
+    \toprule
+    \multicolumn{5}{|c|}{\textbf{Métricas Orientación a Objetos}}\\
+    \hline
+    \textbf{Métrica} & \textbf{Valoración} & \textbf{Punt.} & \textbf{Pond. Métrica} & \textbf{Punt. Ponderada}\\
+    \hline
+    Nº métodos por clase & Existen clases con más de 100 métodos & 0 & 25\% & 0\\
+    \hline
+    Nº métodos públicos por clase & Existen clases con más de 30 métodos públicos & 0 & 25\% & 0\\
+    \hline
+    Profundidad en el árbol de herencia & Existen varias clases con una profundidad de jerarquía de más de 3, pero ninguna clase tiene una profundiad de jerarquía mayor que 6 & 5 & 25\% & 0.75\\
+    \hline
+    Acoplamiento entre objetos & Existen clases que tienen un acoplamiento mayor que 30 & 0 & 25\% & 0\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0.75}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0.25}}\\
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Métricas Estructurales}}\\
+    \hline
+    Número de Líneas por Clase & Existen clases que tienen más de 500 líneas de código, pero ninguna de más de 2000 & 3 & 33.33\% & 1\\
+    \hline
+    Complejidad Ciclomática & Existen clases con complejidad mayor de 200, pero ninguna mayor de 1000 & 3 & 33.33\% & 1\\
+    \hline
+    Código Duplicado & Existe código duplicado de entre 100 y 500 tokens & 3 & 33.33\% & 1\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{3}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{1}}\\
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Métricas Formato de Código}}\\
+    \hline
+    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 33.33\% & 0\\
+    \hline
+    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 33.33\% & 0\\
+    \hline
+    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 33.33\% & 0\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0}}\\   
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Puntuación total: 0.25 + 1 + 0 = \hl{1.25}}}\\
+    \bottomrule
+    \end{tabular}
+    \caption{Puntuación Proyecto MongoDB}
+    \label{tab:mongodb_score}
+  \end{center}
+\end{table}
 
-A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está realizando el esfuerzo necesario en ir mejorando la calidad en función del modelo propuesto.
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{ | p{3.4cm} | p{5cm} | p {1cm} | p{2.3cm} | p{2.1cm} | }
+    \toprule
+    \multicolumn{5}{|c|}{\textbf{Métricas Orientación a Objetos}}\\
+    \hline
+    \textbf{Métrica} & \textbf{Valoración} & \textbf{Punt.} & \textbf{Pond. Métrica} & \textbf{Punt. Ponderada}\\
+    \hline
+    Nº métodos por clase & Ninguna clase posee más de 30 métodos & 5 & 25\% & 1.25\\
+    \hline
+    Nº métodos públicos por clase & Ninguna clase posee más de 10 métodos públicos & 5 & 25\% & 1.25\\
+    \hline
+    Profundidad en el árbol de herencia & Ninguna clase posee una profundidad de jerarquía de más de 3 & 5 & 25\% & 1.25\\
+    \hline
+    Acoplamiento entre objetos & Existen clases que tienen un acoplamiento mayor que 30 & 0 & 25\% & 0\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{3.75}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{1.25}}\\
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Métricas Estructurales}}\\
+    \hline
+    Número de Líneas por Clase & Existen clases que tienen más de 500 líneas de código, pero ninguna de más de 2000 & 3 & 33.33\% & 1\\
+    \hline
+    Complejidad Ciclomática & Ninguna clase tiene complejidad mayor que 200 & 5 & 33.33\% & 1.67\\
+    \hline
+    Código Duplicado & Existe código duplicado de entre 100 y 500 tokens & 3 & 33.33\% & 1\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{2.67}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0.89}}\\
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Métricas Formato de Código}}\\
+    \hline
+    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 33.33\% & 0\\
+    \hline
+    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 33.33\% & 0\\
+    \hline
+    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 33.33\% & 0\\
+    \midrule
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0}}\\
+    \hline
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0}}\\   
+    \midrule
+    \multicolumn{5}{|c|}{\textbf{Puntuación total: 1.25 + 0.89 + 0 = \hl{2.14}}}\\
+    \bottomrule
+    \end{tabular}
+    \caption{Puntuación Proyecto RethinkDB}
+    \label{tab:rethinkdb_score}
+  \end{center}
+\end{table}
 
 \section{Conclusiones}
 
@@ -563,6 +665,11 @@ Establecer modelos de calidad basados en métricas debe afrontarse como un ejerc
 La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer preferencias de métricas y su impacto en la calidad final.
 
 \section{Mejoras y posibles trabajos futuros}
+
+Análisis de calidad con histórico de tiempo.
+Modificación de herramientas para extracción de métricas.
+Comparativa entre iteraciones de modelos de calidad.
+
 
 \pagebreak
 
