@@ -310,6 +310,7 @@ Respecto al formato que debe poseer el código fuente, resulta razonable que és
 
 \begin{itemize}
 \item{Anchura de líneas de código}. Tradicionalmente, la anchura de línea se limitaba a 80 (límite de Hollerith). Sin embargo, en la actualidad, con la anchura de los monitores actuales, anchuras de 100 y hasta 120 caracteres son razonables. Más de 120 caracteres de ancho empieza a ser ilegible.
+\item{Nombrado}. Se debe perseguir una correcta nomenclatura de las variables, clases y métodos. Deben perseguir un nombrado claro, que especifique de forma correcta el motivo de su existencia y clarifique la intención~\cite{unclebob:cleancode}. Nombres de variables con una única letra deben evitarse, más aún si son nombres que favorecen la confusión con números (i.e.: 'int l' ó 'int O', que pueden confundirse con los números 1 y 0 respectivamente). 
 \item{Indentación}. Se debe perseguir una correcta indentación del código fuente. Más allá del número de caracteres a usar, al menos se debe procurar no romper la indentación. También se encuentra desaconsejado el caracter tabulador, ya que se prefiere un número determinado de espacios en blanco.
 \item{Longitud de fichero}. A la hora de comprender el código, la utilización de ficheros de poca longitud también favorece la legibilidad del código.
 \end{itemize}
@@ -406,28 +407,20 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
     \hline
     WMC1 & Número de métodos por clase & Ninguna clase posee más de 30 métodos & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existe únicamente una clase con más de 30 métodos pero ninguna con más de 100 métodos & 4 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con más de 30 métodos pero ninguna con más de 100 métodos & 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe al menos una clase con más de 100 métodos & 1 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con más de 100 métodos & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 30 métodos pero ninguna con más de 100 métodos & 3 \\ \cline{3-3}\cline{4-4}
+    & & Existen clases con más de 100 métodos & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     WMCv & Número de métodos públicos por clase & Ninguna clase posee más de 10 métodos públicos & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existe únicamente una clase con más de 10 métodos públicos pero ninguna con más de 30 métodos públicos & 4 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con más de 10 métodos públicos pero ninguna con más de 30 métodos públicos & 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe al menos una clase con más de 30 métodos públicos & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con más de 10 métodos públicos pero ninguna con más de 30 métodos públicos & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen varias clases con más de 30 métodos públicos & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     DIT & Profundidad de jerarquía en el árbol de herencia & Ninguna clase tiene una profundidad de jerarquía mayor que 3 & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existe una clase con una profundidad de jerarquía de más de 3 & 4 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con una profundidad de jerarquía de más de 3  & 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe una clase con una profundidad de jerarquía de más de 6  & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen varias clases con una profundidad de jerarquía de más de 3  & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen varias clases con una profundidad de jerarquía de más de 6  & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     CBO & Acoplamiento entre objetos & Todas las clases tienen un acoplamiento menor o igual a 12 & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Una clase tiene un acoplamiento mayor que 12 & 4 \\ \cline{3-3}\cline{4-4}
     & & Varias clases tiene un acoplamiento mayor que 12 pero ninguna lo tiene mayor que & 3 \\ \cline{3-3}\cline{4-4}
-    & & Una clase tiene un acoplamiento mayor que 30 & 1 \\ \cline{3-3}\cline{4-4}
-    & & Varias clases tienen un acoplamiento mayor que 30 & 0 \\ 
+    & & Existen clases que tienen un acoplamiento mayor que 30 & 0 \\ 
     \bottomrule
     \end{tabular}
     \caption{Especificación de Métricas de Diseño Orientado a Objetos}
@@ -442,21 +435,17 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
     \hline
     LOC & Número de líneas por clase & Ningua clase tiene más de 500 líneas de código & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Al menos una clase tiene más de 500 líneas de código pero ninguna de más de 2000 líneas & 4 \\ \cline{3-3}\cline{4-4}
-    & & Varias clases tienen más de 500 líneas de código, pero ninguna de más de 2000 líneas & 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe una clase de más de 2000 líneas de código & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen clases que tienen más de 500 líneas de código, pero ninguna de más de 2000 líneas & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen varias clases con más de 2000 líneas de código & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     McCC & Complejidad Ciclomática de McCabe & Ninguna clase posee un valor complejidad superior 200 & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existe al menos una clase con complejidad mayor de 200 pero ninguna superior a 1000 & 4 \\ \cline{3-3}\cline{4-4}
-    & & Existen varias clases con complejidad mayor de 200 pero ninguna superior a 1000 & 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe al menos una clase con complejidad superior a 1000 & 1 \\ \cline{3-3}\cline{4-4}
+    & & Existen clases con complejidad mayor de 200 pero ninguna superior a 1000 & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen varias clases con complejidad superior a 1000 & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     DUP & Código Duplicado & No existe código duplicado de más de 100 tokens & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existe Código Duplicado de entre 100 y 500 tokens & 3 \\ \cline{3-3}\cline{4-4}
     & & Existe Código Duplicado de entre 500 y 1000 tokens& 2 \\ \cline{3-3}\cline{4-4}
-    & & Existe Código Duplicado de más de 1000 tokens & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existe Código Duplicado de más de 1000 tokens & 0 \\ 
     \bottomrule
     \end{tabular}
     \caption{Categoría: Métricas de Calidad Estrucutural de Código Fuente}
@@ -475,7 +464,10 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
     & & Existen líneas de más de 120 caracteres & 0 \\ \cline{3-3}\cline{4-4}
     \hline
     TAB & No se deben utilizar tabuladores para identar el código & No existe ningún tabulador identando el código & 5 \\ \cline{3-3} \cline{4-4} 
-    & & Existen tabuladores en la identación del código & 0 \\ \cline{3-3}\cline{4-4}
+    & & Existen tabuladores en la identación del código & 0 \\ \cline{3-3} \cline{4-4}
+    \hline
+    VAR & No se deben utilizar nombres de variables 'l' u 'O' & No existe ninguna variable con la nomenclatura 'l' u 'O' & 5 \\ \cline{3-3} \cline{4-4} 
+    & & Existen variables con la nomenclatura 'l' u 'O' & 0 \\ 
     \bottomrule
     \end{tabular}
     \caption{Categoría: Métricas de Calidad de Formato de Código Fuente}
@@ -487,7 +479,9 @@ En posteriores iteraciones, se han ido incorporando herramientas que han permiti
 
 \subsection{Análisis de la calidad del código}
 
-Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre los diversos proyectos a analizar.
+Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre diversos proyectos, de temática similar, que estén desarrollados en C++ y que cuenten con un número de líneas de código similar entre sí, con diferencias de no más de un orden de magnitud.
+
+En esta ocasión, los proyectos elegidos han sido MongoDB (LOC=920K, LOC-C++=740K), rethinkdb (LOC=315K, LOC-C++=218K) y arangodb (LOC=3M, LOC-C++=1,8M). El modelo de calidad se aplicará únicamente sobre el código C++ del proyecto, ignorando otros lenguajes de programación o código que no pertenezca al proyecto, como puedan ser third parties.
 
 \subsection{Histórico de la calidad del código}
 
