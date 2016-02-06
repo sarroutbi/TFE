@@ -1,0 +1,100 @@
+\documentclass[11pt]{article}
+%Gummi|061|=)
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\title{\textbf{Anteproyecto Fin de Experturía: Medición de calidad de código en proyectos Open Source en
+base a métricas}}
+\author{Sergio Arroutbi Braojos}
+\selectlanguage{spanish}
+\date{\today}
+\usepackage[bottom=14em]{geometry}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+
+\begin{document}
+
+\hypersetup
+{   
+pdfborder={0 0 0}
+}
+   
+\maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Introducción}
+
+Breve introducción que enumere el objetivo que se persigue con este proyecto.
+
+\section{Un modelo de calidad basado en métricas software}
+
+En este apartado se introducirán los modelos de calidad ya existentes para proyectos de software libre, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
+
+Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
+
+Finalmente, en este apartado se debería describir un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de las métricas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y porqué.
+
+\subsection{Métricas de diseño orientado a objetos}
+
+\subsubsection{Acoplamiento}
+\subsubsection{Cohesión}
+\subsubsection{Encapsulación}
+\subsubsection{Herencia}
+\subsubsection{Complejidad de clases}
+\subsubsection{Abstracción}
+\subsubsection{Estabilidad}
+
+\subsection{Métricas de calidad de código de clases}
+\subsubsection{Número de métodos por clase}
+\subsubsection{Número de atributos por clase}
+
+\subsection{Métricas de calidad de código funcional}
+\subsubsection{Número de parámetros por método}
+\subsubsection{Longitud de métodos}
+\subsubsection{Complejidad ciclomática}
+\subsubsection{Formateo de código}
+\subsubsection{Comentarios de código}
+
+\section{Herramientas}
+
+\subsection{Extracción de métricas}
+En este apartado se describirán aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes.
+
+Este apartado, además, permitirá mostrar diversas gráficas y/o reportes comparativos de la calidad del código para un determinado proyectos.
+
+Así, se podrá mostrar de forma gráfica una comparativa de aquellas métricas más determinantes del sujeto a analizar.
+
+\subsubsection{cccc}
+
+\subsubsection{cppdepend}
+
+\subsubsection{Sonar}
+
+\section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
+
+En este apartado se realizará el análisis de dos proyectos Open Source cualesquiera, de un tamaño similar en líneas de código, escritos en C++. De esta forma, se popdrán concretar los aspectos vistos anteriormente en una comparativa real.
+
+Un ejemplo posible es la comparativa entre bases de datos NoSQL escritas en C++, como pueden ser MongoDB, rethinkdb y arangodb, aunque hay otras opciones. Se puede realizar de igual forma en este apartado más de una comparativa. Se intentará, en todo caso, buscar proyectos escritos en c++, de naturalezas similares, que permitan realizar una comparativa en función de las distintas métricas anteriores.
+
+\subsection{Análisis de la calidad del código}
+
+Esta sección permitirá concretar el modelo de calidad elegido sobre los proyectos inspeccionados. De esta forma, se realizará una comparativa entre los diversos proyectos a analizar.
+
+\subsection{Histórico de calidad del código}
+
+A través de las herramientas descritas anteriormente, se podrá realizar un análisis de la evolución histórica que ha ido sufriendo el código a lo largo del tiempo. De esta forma se podrá identificar si la coumnidad está 
+
+\section{Mejoras y posibles trabajos futuros}
+
+Finalmente, dentro de esta sección, se recogerán mejoras y posibles trabajos futuros que se podrían realizar para mejorar o extender lo que se haya realizado en este proyecto.
+
+Se contemplarán, por tanto, opciones de extender el modelo de calidad con más métricas, o bien incluir aspectos que no se han incluido, extender el modelo para más lenguajes de programación, etc.
+
+\end{document}
