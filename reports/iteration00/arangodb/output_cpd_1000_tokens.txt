@@ -1,0 +1,1093 @@
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Geo/Runner.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Geo/georeg.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/skiplist-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/vector-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/associative-multi-pointer-nohashcache-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/Runner.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/conversions-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/StringBufferTest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/json-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/string-buffer-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/AttributeNameParserTest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/string-utf8-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/priorityqueue-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/associative-pointer-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/files-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/csv-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/string-utf8-normalize-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/structure-size-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/associative-multi-pointer-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/json-utilities-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/EndpointTest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/hashes-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/PathEnumeratorTest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/StringUtilsTest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/vector-pointer-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/string-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/VelocyPackHelper-test.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/fpconv-test.cpp
+Found a 165 line (1019 tokens) duplication in the following files: 
+Starting at line 121 of /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/associative-multi-pointer-nohashcache-test.cpp
+Starting at line 130 of /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/UnitTests/Basics/associative-multi-pointer-test.cpp
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief setup
+////////////////////////////////////////////////////////////////////////////////
+
+BOOST_FIXTURE_TEST_SUITE(CMultiPointerNoHashCacheTest, CMultiPointerNoHashCacheSetup)
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief test initialization
+////////////////////////////////////////////////////////////////////////////////
+
+BOOST_AUTO_TEST_CASE (tst_init) {
+  INIT_MULTI
+
+  BOOST_CHECK_EQUAL((uint32_t) 0, a1.size());
+
+  DESTROY_MULTI
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/// @brief test unique insertion
+////////////////////////////////////////////////////////////////////////////////
+
+BOOST_AUTO_TEST_CASE (tst_insert_few) {
+  INIT_MULTI
+
+  void* r = 0;
+
+  ELEMENT(e1, 1, 123);
+  BOOST_CHECK_EQUAL(r, a1.insert(nullptr, &e1, true, false));
+  BOOST_CHECK_EQUAL((uint32_t) 1, a1.size());
+  BOOST_CHECK_EQUAL(&e1, a1.lookup(nullptr, &e1));
+
+  BOOST_CHECK_EQUAL(&e1, a1.remove(nullptr, &e1));
+  BOOST_CHECK_EQUAL((uint32_t) 0, a1.size());
+  BOOST_CHECK_EQUAL(r, a1.lookup(nullptr, &e1));
+
+  DESTROY_MULTI
+}
+
+// Note MODULUS must be a divisor of NUMBER_OF_ELEMENTS
+// and NUMBER_OF_ELEMENTS must be a multiple of 3.
+#define NUMBER_OF_ELEMENTS 3000
+#define MODULUS 10
+
+BOOST_AUTO_TEST_CASE (tst_insert_delete_many) {
+  INIT_MULTI
+
+  unsigned int i, j;
+  ELEMENT(e, 0, 0);
+  vector<data_container_t*> v;
+
+  data_container_t* n = 0;
+  data_container_t* p;
+  data_container_t* one_more;
+
+  // Put in some data:
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    p = new data_container_t(i % MODULUS, i);
+    v.push_back(p);
+    BOOST_CHECK_EQUAL(n, a1.insert(nullptr, p, true, false));
+  }
+  one_more = new data_container_t(NUMBER_OF_ELEMENTS % MODULUS, 
+                                  NUMBER_OF_ELEMENTS);
+
+  // Now check it is there (by element):
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    p = static_cast<data_container_t*>(a1.lookup(nullptr, v[i]));
+    BOOST_CHECK_EQUAL(p, v[i]);
+  }
+  // This should not be there:
+  p = static_cast<data_container_t*>(a1.lookup(nullptr, one_more));
+  BOOST_CHECK_EQUAL(n, p);
+  
+  // Now check by key:
+  std::vector<void*>* res = nullptr;
+
+  for (i = 0;i < MODULUS;i++) {
+    int* space = static_cast<int*>(TRI_Allocate(TRI_UNKNOWN_MEM_ZONE,
+                                    sizeof(int) * NUMBER_OF_ELEMENTS / MODULUS,
+                                    true));
+    res = a1.lookupByKey(nullptr, &i);
+    BOOST_CHECK_EQUAL((int) res->size(),
+                      (int) (NUMBER_OF_ELEMENTS / MODULUS));
+    // Now check its contents:
+    for (j = 0; j < res->size(); j++) {
+      data_container_t* q = static_cast<data_container_t*>(res->at(j));
+      BOOST_CHECK_EQUAL((int) (q->value % MODULUS), (int) i);
+      BOOST_CHECK_EQUAL(space[(q->value - i) / MODULUS], 0);
+      space[(q->value - i) / MODULUS] = 1;
+    }
+    TRI_Free(TRI_UNKNOWN_MEM_ZONE, space);
+    delete res;
+  }
+
+  // Delete some data:
+  for (i = 0;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(v[i], a1.remove(nullptr, v[i]));
+  }
+  for (i = 0;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(n, a1.remove(nullptr, v[i]));
+  }
+
+  // Now check which are there (by element):
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    p = static_cast<data_container_t*>(a1.lookup(nullptr, v[i]));
+    if (i % 3 == 0) {
+      BOOST_CHECK_EQUAL(p,n);
+    }
+    else {
+      BOOST_CHECK_EQUAL(p,v[i]);
+    }
+  }
+  // This should not be there:
+  p = static_cast<data_container_t*>(a1.lookup(nullptr, one_more));
+  BOOST_CHECK_EQUAL(n, p);
+  
+  // Delete some more:
+  for (i = 1;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(v[i], a1.remove(nullptr, v[i]));
+  }
+  for (i = 1;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(n, a1.remove(nullptr, v[i]));
+  }
+
+  // Now check which are there (by element):
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    p = static_cast<data_container_t*>(a1.lookup(nullptr, v[i]));
+    if (i % 3 == 2) {
+      BOOST_CHECK_EQUAL(p,v[i]);
+    }
+    else {
+      BOOST_CHECK_EQUAL(p,n);
+    }
+  }
+  // This should not be there:
+  p = static_cast<data_container_t*>(a1.lookup(nullptr, one_more));
+  BOOST_CHECK_EQUAL(n, p);
+  
+  // Delete the rest:
+  for (i = 2;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(v[i], a1.remove(nullptr, v[i]));
+  }
+  for (i = 2;i < v.size();i += 3) {
+    BOOST_CHECK_EQUAL(n, a1.remove(nullptr, v[i]));
+  }
+
+  // Now check which are there (by element):
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    p = static_cast<data_container_t*>(a1.lookup(nullptr, v[i]));
+    BOOST_CHECK_EQUAL(p,n);
+  }
+  // This should not be there:
+  p = static_cast<data_container_t*>(a1.lookup(nullptr, one_more));
+  BOOST_CHECK_EQUAL(n, p);
+  // Pull down data again:
+  for (i = 0;i < NUMBER_OF_ELEMENTS;i++) {
+    delete v[i];
+  }
+  v.clear();
+  delete one_more;
+
+  DESTROY_MULTI
+}
+
+
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/Endpoint.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/InitializeRest.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/HttpRequest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointUnixDomain.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/ConnectionInfo.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointList.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/Version.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointUnixDomain.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/InitializeRest.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIpV4.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/SslInterface.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIpV4.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/HttpRequest.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIpV6.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/SslInterface.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIpV6.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/RequestContext.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIp.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointIp.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/HttpResponse.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/Endpoint.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/HttpResponse.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/Version.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/RequestUser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Rest/EndpointList.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SimpleHttpResult.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/GeneralClientConnection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/GeneralClientConnection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/ClientConnection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SslClientConnection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SimpleHttpResult.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SimpleHttpClient.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/ConnectionManager.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/ConnectionManager.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/ClientConnection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SslClientConnection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/SimpleHttpClient/SimpleHttpClient.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/iowin32.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/unzip.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/ioapi.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/zip.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/unzip.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/iowin32.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/ioapi.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/zip.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Zip/crypt.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/ProgramOptions/program-options.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/ProgramOptions/program-options.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/tri-strings.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/prime-numbers.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Thread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Nonce.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/mimetypes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory-map-posix.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/csv.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/fpconv.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ConditionVariable.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Nonce.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/fasthash.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/AttributeNameParser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/conversions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/threads.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/StringBuffer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/win-utils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Common.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/JsonHelper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WorkMonitor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/random.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Barrier.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Exceptions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/threads-win32.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/json.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ProgramOptionsDescription.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Mutex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/MutexLocker.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/prime-numbers.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/terminal-utils-posix.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/debugging.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/make_unique.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/json-utilities.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Exceptions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/debugging.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory-map-win32.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/AssocUnique.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WorkerThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/random.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/json.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/shell-colors.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Logger.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/local-configuration-win.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/terminal-utils-win32.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/tri-zip.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/locks-posix.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/AttributeNameParser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/voc-mimetypes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/hashes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Traverser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/threads-posix.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Thread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadWriteLock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/tri-strings.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/SkipList.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/operating-system.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ProgramOptionsDescription.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/structures.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/terminal-utils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/terminal-utils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/InitializeBasics.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/system-functions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ScopeGuard.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/csv.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/BloomFilter.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/associative.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/error.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/logging.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/messages.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WorkItem.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/gcd.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/threads-posix.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ssl-helper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/win-utils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WorkMonitor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/hashes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/MutexLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/error.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Functor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/vector.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/VelocyPackHelper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/voc-mimetypes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/socket-utils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ssl-helper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/associative.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/conversions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/fpconv.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory-map.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ConditionLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ProgramOptions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/StringUtils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/init.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/locks-win32.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/system-functions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadWriteLockCPP11.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory-map-win32.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/DeadlockDetector.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/socket-utils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/InitializeBasics.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/voc-errors.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/process-utils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ConditionLocker.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/files.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ConditionVariable.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/application-exit.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/logging.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/memory-map-posix.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/VPackStringBufferAdapter.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/levenshtein.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/RandomGenerator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Mutex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/mimetypes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Barrier.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/system-compiler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/StringBuffer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadWriteLockCPP11.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/JsonHelper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/fasthash.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/voc-errors.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/structures.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/locks-win32.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadUnlocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/VelocyPackHelper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/locks.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ThreadPool.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ReadWriteLock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/tri-zip.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/StringUtils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/powers.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ThreadPool.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/application-exit.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/FileUtils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/DataProtector.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/init.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/RandomGenerator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/levenshtein.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/json-utilities.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Utf8Helper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WriteLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Utf8Helper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/vector.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/process-utils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WorkMonitorDummy.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Dictionary.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/AssociativeArray.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/VPackStringBufferAdapter.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/AssocMulti.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/FileUtils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/ProgramOptions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/WriteUnlocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/Logger.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/files.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/DataProtector.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/threads-win32.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Basics/locks-posix.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-globals.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/JSLoader.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-utils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-json.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-shell.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-buffer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-utils.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-json.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-wrapper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-conv.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-globals.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-vpack.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/V8LineEditor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-buffer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-environment.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-shell.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-conv.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/V8LineEditor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/JSLoader.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-vpack.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/JsonParser/json-parser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/ShellBase.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/LineEditor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/DummyShell.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/LinenoiseShell.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/ScriptLoader.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/Completer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/ScriptLoader.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/LinenoiseShell.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/LineEditor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/ShellBase.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/Utilities/DummyShell.cpp
+Found a 150 line (1655 tokens) duplication in the following files: 
+Starting at line 332 of /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/V8/v8-json.cpp
+Starting at line 339 of /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/lib/JsonParser/json-parser.cpp
+
+static void tri_v8_ensure_buffer_stack (yyscan_t yyscanner );
+static void tri_v8__load_buffer_state (yyscan_t yyscanner );
+static void tri_v8__init_buffer (YY_BUFFER_STATE b,FILE *file ,yyscan_t yyscanner );
+
+#define YY_FLUSH_BUFFER tri_v8__flush_buffer(YY_CURRENT_BUFFER ,yyscanner)
+
+YY_BUFFER_STATE tri_v8__scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
+YY_BUFFER_STATE tri_v8__scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
+YY_BUFFER_STATE tri_v8__scan_bytes (yyconst char *bytes,yy_size_t len ,yyscan_t yyscanner );
+
+void *tri_v8_alloc (yy_size_t ,yyscan_t yyscanner );
+void *tri_v8_realloc (void *,yy_size_t ,yyscan_t yyscanner );
+void tri_v8_free (void * ,yyscan_t yyscanner );
+
+#define yy_new_buffer tri_v8__create_buffer
+
+#define yy_set_interactive(is_interactive) \
+	{ \
+	if ( ! YY_CURRENT_BUFFER ){ \
+        tri_v8_ensure_buffer_stack (yyscanner); \
+		YY_CURRENT_BUFFER_LVALUE =    \
+            tri_v8__create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
+	} \
+	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
+	}
+
+#define yy_set_bol(at_bol) \
+	{ \
+	if ( ! YY_CURRENT_BUFFER ){\
+        tri_v8_ensure_buffer_stack (yyscanner); \
+		YY_CURRENT_BUFFER_LVALUE =    \
+            tri_v8__create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
+	} \
+	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
+	}
+
+#define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
+
+/* Begin user sect3 */
+
+#define tri_v8_wrap(yyscanner) 1
+#define YY_SKIP_YYWRAP
+
+typedef unsigned char YY_CHAR;
+
+typedef int yy_state_type;
+
+#define yytext_ptr yytext_r
+
+static yy_state_type yy_get_previous_state (yyscan_t yyscanner );
+static yy_state_type yy_try_NUL_trans (yy_state_type current_state  ,yyscan_t yyscanner);
+static int yy_get_next_buffer (yyscan_t yyscanner );
+static void yy_fatal_error (yyconst char msg[] ,yyscan_t yyscanner );
+
+/* Done after the current pattern has been matched and before the
+ * corresponding action - sets up yytext.
+ */
+#define YY_DO_BEFORE_ACTION \
+	yyg->yytext_ptr = yy_bp; \
+	yyleng = (size_t) (yy_cp - yy_bp); \
+	yyg->yy_hold_char = *yy_cp; \
+	*yy_cp = '\0'; \
+	yyg->yy_c_buf_p = yy_cp;
+
+#define YY_NUM_RULES 15
+#define YY_END_OF_BUFFER 16
+/* This struct is not used in this scanner,
+   but its presence is necessary. */
+struct yy_trans_info
+	{
+	flex_int32_t yy_verify;
+	flex_int32_t yy_nxt;
+	};
+static yyconst flex_int16_t yy_accept[45] =
+    {   0,
+       13,   13,   16,   14,   13,   13,   14,   14,   11,    6,
+        6,   12,   14,   14,   14,    9,   10,    7,    8,   13,
+        0,    0,    4,    0,    6,    6,    0,    0,    6,    0,
+        0,    0,    5,    6,    0,    6,    0,    0,    0,    0,
+        2,    3,    1,    0
+    } ;
+
+static yyconst flex_int32_t yy_ec[256] =
+    {   0,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
+        1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    4,    5,    6,    5,    5,    5,    5,    5,    5,
+        5,    5,    7,    8,    9,   10,    5,   11,   12,   12,
+       12,   12,   12,   12,   12,   12,   12,   13,    5,    5,
+        5,    5,    5,    5,   14,    5,    5,    5,   15,   16,
+        5,    5,    5,    5,    5,   17,    5,   18,    5,    5,
+        5,   19,   20,   21,   22,    5,    5,    5,    5,    5,
+       23,   24,   25,    5,    5,    5,   26,    5,    5,    5,
+
+       27,   28,    5,    5,    5,    5,    5,   29,    5,   30,
+        5,    5,    5,   31,   32,   33,   34,    5,    5,    5,
+        5,    5,   35,    5,   36,    5,    5,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1
+    } ;
+
+static yyconst flex_int32_t yy_meta[37] =
+    {   0,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1
+    } ;
+
+static yyconst flex_int16_t yy_base[47] =
+    {   0,
+        0,    0,  114,  126,   35,   38,   42,   35,  126,   40,
+       41,  126,   35,   35,   39,  126,  126,  126,  126,   60,
+       48,   72,  126,   89,   50,   70,   72,   79,   83,   42,
+       70,   67,  126,   91,   93,   96,   80,   92,   96,   98,
+      126,  126,  126,  126,   78,   75
+    } ;
+
+static yyconst flex_int16_t yy_def[47] =
+    {   0,
+       44,    1,   44,   44,   44,   44,   45,   44,   44,   44,
+       44,   44,   44,   44,   44,   44,   44,   44,   44,   44,
+       46,   45,   44,   46,   44,   44,   44,   44,   44,   44,
+       44,   44,   44,   44,   44,   44,   44,   44,   44,   44,
+       44,   44,   44,    0,   44,   44
+    } ;
+
+static yyconst flex_int16_t yy_nxt[163] =
+    {   0,
+        4,    5,    6,    5,    4,    7,    8,    9,    8,    4,
+       10,   11,   12,    4,    4,   13,    4,   14,    4,    4,
+       15,    4,   16,    4,   17,    4,    4,   13,    4,   14,
+        4,    4,   15,    4,   18,   19,   20,   20,   20,   20,
+       20,   20,   21,   21,   21,   25,   26,   23,   30,   27,
+       27,   29,   29,   33,   28,   28,   31,   32,   37,   27,
+       30,   20,   20,   20,   28,   24,   28,   28,   31,   32,
+
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Storage/Marker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Storage/Options.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Storage/Marker.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Storage/Options.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/SkiplistIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/IndexIterator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/Index.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/FulltextIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/GeoIndex2.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/HashIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/EdgeIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/PrimaryIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/Index.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/EdgeIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/HashIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/FulltextIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/CapConstraint.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/SimpleAttributeEqualityMatcher.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/SimpleAttributeEqualityMatcher.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/PrimaryIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/PathBasedIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/SkiplistIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/PathBasedIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/CapConstraint.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/GeoIndex2.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Indexes/IndexIterator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/IndexOperators/index-operator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/IndexOperators/index-operator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Statistics/StatisticsAgent.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Statistics/figures.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Statistics/statistics.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Statistics/statistics.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestCursorHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestDebugHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestSimpleQueryHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestExportHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestUploadHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestSimpleQueryHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestQueryCacheHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestBatchHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestDocumentHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestImportHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestAdminLogHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestReplicationHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestVersionHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestHandlerCreator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/WorkMonitorHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/WorkMonitorHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestEdgesHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestSimpleHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestPleaseUpgradeHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestEdgeHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestReplicationHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestImportHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestEdgesHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestDebugHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestVersionHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestPleaseUpgradeHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestExportHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestBaseHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestQueryHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestShutdownHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestBaseHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestDocumentHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestEdgeHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestVocbaseBaseHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestSimpleHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestVocbaseBaseHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestQueryCacheHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestAdminLogHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestJobHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestCursorHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestQueryHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestUploadHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestShutdownHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestBatchHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestHandler/RestJobHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Rest/OperationMode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Rest/AnyServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Rest/AnyServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/vocbase-defaults.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-master.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/collection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/collection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/ExampleMatcher.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-dump.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/datafile.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/server.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Shaper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/edge-collection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/DatafileStatistics.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/datafile.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-applier.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/transaction.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/ExampleMatcher.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Graphs.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/shape-accessor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/cleanup.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/vocbase-defaults.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/shaped-json.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/document-collection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Legends.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Ditch.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-dump.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/DocumentAccessor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Traverser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/KeyGenerator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/shaped-json.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/DatafileStatistics.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/update-policy.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Traverser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/compactor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/server.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/vocbase.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/KeyGenerator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/headers.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/compactor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/voc-types.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Legends.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-master.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/headers.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/auth.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/shape-accessor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/VocShaper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Shaper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/cleanup.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-applier.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/auth.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Graphs.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/VocShaper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/DocumentAccessor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/document-collection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-common.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/vocbase.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/transaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/replication-common.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/edge-collection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/VocBase/Ditch.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/GeoIndex/GeoIndex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/GeoIndex/GeoIndex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/ArangoServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/ConsoleThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/WindowsServiceUtils.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/VocbaseContext.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/ArangoServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/VocbaseContext.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/arangod.cpp
+net.sourceforge.pmd.lang.ast.TokenMgrError: Lexical error in file /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/ConsoleThread.cpp at line 136, column 42.  Encountered: "\n" (10), after : "\"SCRIPT("
+	at net.sourceforge.pmd.lang.cpp.ast.CppParserTokenManager.getNextToken(CppParserTokenManager.java:1623)
+	at net.sourceforge.pmd.lang.cpp.CppTokenManager.getNextToken(CppTokenManager.java:27)
+	at net.sourceforge.pmd.cpd.CPPTokenizer.tokenize(CPPTokenizer.java:66)
+	at net.sourceforge.pmd.cpd.CPD.addAndThrowLexicalError(CPD.java:144)
+	at net.sourceforge.pmd.cpd.CPD.add(CPD.java:139)
+	at net.sourceforge.pmd.cpd.CPD.add(CPD.java:104)
+	at net.sourceforge.pmd.cpd.CPD.add(CPD.java:66)
+	at net.sourceforge.pmd.cpd.CPD.addDirectory(CPD.java:76)
+	at net.sourceforge.pmd.cpd.CPD.addRecursively(CPD.java:61)
+	at net.sourceforge.pmd.cpd.CPDCommandLineInterface.addSourcesFilesToCPD(CPDCommandLineInterface.java:113)
+	at net.sourceforge.pmd.cpd.CPDCommandLineInterface.main(CPDCommandLineInterface.java:81)
+	at net.sourceforge.pmd.cpd.CPD.main(CPD.java:180)
+Skipping /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/RestServer/ConsoleThread.cpp due to parse error
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/RestShardHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/AgencyComm.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ServerState.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/HeartbeatThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterMethods.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterInfo.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/v8-cluster.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterMethods.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/AgencyComm.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/v8-cluster.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/RestShardHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterTraverser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterInfo.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ServerJob.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterComm.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterTraverser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ServerJob.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ApplicationCluster.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ClusterComm.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ApplicationCluster.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/HeartbeatThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Cluster/ServerState.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AttributeAccessor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/V8Expression.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Ast.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ClusterNodes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CalculationBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationOptions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlValue.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlItemBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionEngine.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SubqueryBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Executor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortCondition.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Index.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Collections.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationOptions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Expression.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/EnumerateCollectionBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/V8Expression.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryCache.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SubqueryBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationNodes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Collection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ClusterBlocks.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectionScanner.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationNodes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/RestAqlHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Graphs.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationBlocks.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AstNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Collection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/RestAqlHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryRegistry.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlItemBlockManager.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/tokens.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionPlan.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlItemBlockManager.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/IndexNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Function.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Optimizer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/NodeFinder.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/OptimizerRules.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/BindParameters.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectOptions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Expression.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionEngine.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortCondition.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ClusterNodes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Index.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/EnumerateListBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlValue.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ClusterBlocks.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ModificationBlocks.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionPlan.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AstNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Functions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AqlItemBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/BindParameters.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Optimizer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/grammar.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Functions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryCache.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Aggregator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryResultV8.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Executor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalConditionFinder.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/OptimizerRules.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryList.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ConditionFinder.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/WalkerWorker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/NodeFinder.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ConditionFinder.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/VariableGenerator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryResult.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryRegistry.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/IndexBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/EnumerateListBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Ast.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionStats.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Range.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/types.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Scopes.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ShortStringStorage.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Range.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ShortStringStorage.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/AttributeAccessor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/TraversalConditionFinder.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CalculationBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/BasicBlocks.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Variable.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/VariableGenerator.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Variable.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/QueryList.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectOptions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/EnumerateCollectionBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Graphs.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Query.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/SortNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionStats.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectNode.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/grammar.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/IndexBlock.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Parser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionBlock.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Collections.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Function.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Arithmetic.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/ExecutionNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Query.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/BasicBlocks.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Condition.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Aggregator.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Condition.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectionScanner.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/IndexNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/CollectNode.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Parser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Aql/Scopes.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/DocumentOperation.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Marker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Slot.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/RecoverState.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/SyncRegion.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/LogfileManager.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Slot.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/CollectorThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Logfile.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/RemoverThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/LogfileManager.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Slots.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/CollectorThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Slots.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/AllocatorThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/SynchronizerThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/SynchronizerThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/RemoverThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Marker.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/AllocatorThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/Logfile.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Wal/RecoverState.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/ApplicationDispatcher.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/DispatcherThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/DispatcherThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/ApplicationDispatcher.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/DispatcherQueue.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/Dispatcher.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/Job.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/Dispatcher.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/DispatcherQueue.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Dispatcher/Job.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SignalTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SchedulerThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/ListenTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SchedulerLibev.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SchedulerLibev.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/TaskManager.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/Task.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SocketTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/PeriodicTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/events.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SignalTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/Task.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/TimerTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/PeriodicTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/Scheduler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SocketTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/ListenTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/TimerTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/TaskManager.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/Scheduler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/ApplicationScheduler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/SchedulerThread.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Scheduler/ApplicationScheduler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpsCommTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpCommTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/PathHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpListenTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpsServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpsServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/PathHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpServerJob.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpListenTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpHandlerFactory.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/ApplicationEndpointServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpCommTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpHandlerFactory.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpsCommTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpServerJob.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/AsyncJobManager.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/ApplicationEndpointServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/AsyncJobManager.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/HttpServer/HttpHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/InitialSyncer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/ContinuousSyncer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/Syncer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/InitialSyncer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/Syncer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Replication/ContinuousSyncer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-query.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-user-structures.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-wrapshapedjson.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/ApplicationV8.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-statistics.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-actions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-dispatcher.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-replication.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-user-structures.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-vocindex.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8PeriodicTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-collection-util.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8Job.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8Traverser.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8QueueJob.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-wrapshapedjson.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-actions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-vocindex.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8TimerTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-shape-conv.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-statistics.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-collection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-query.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-dispatcher.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8PeriodicTask.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-voccursor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-vocbase.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8TimerTask.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-util.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-vocbase.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/ApplicationV8.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-collection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8QueueJob.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-vocbaseprivate.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-replication.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8Job.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/V8Traverser.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-voccursor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/V8Server/v8-shape-conv.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-wordlist.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-handles.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-common.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-index.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-handles.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-result.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-query.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-query.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-list.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-list.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-result.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-wordlist.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/FulltextIndex/fulltext-index.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/V8TransactionContext.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/ReplicationTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/StandaloneTransactionContext.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/AqlTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/TransactionContext.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionKeysRepository.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionKeys.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionReadLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/SingleCollectionWriteTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CursorRepository.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/DocumentHelper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionKeys.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/Transaction.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/DatabaseGuard.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/transactions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionExport.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/SingleCollectionTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/StandaloneTransactionContext.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/DocumentHelper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/Transaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionNameResolver.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionWriteLocker.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/TransactionContext.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/ShapedJsonTransformer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/ShapedJsonTransformer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/ExplicitTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/V8ResolverGuard.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionExport.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionKeysRepository.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/WorkMonitorArangod.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CursorRepository.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/SingleCollectionReadOnlyTransaction.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/Cursor.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/CollectionGuard.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/V8TransactionContext.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Utils/Cursor.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/ApplicationServer/ApplicationServer.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/ApplicationServer/ApplicationFeature.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/ApplicationServer/ApplicationServer.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/ApplicationServer/ApplicationFeature.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Actions/actions.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Actions/RestActionHandler.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Actions/RestActionHandler.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangod/Actions/actions.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/Benchmark/BenchmarkThread.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/Benchmark/arangob.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/Benchmark/BenchmarkOperation.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/Benchmark/BenchmarkCounter.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/Benchmark/test-cases.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/ArangoShell/ArangoClient.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/ArangoShell/ArangoClient.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/V8ClientConnection.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/arangorestore.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/arangodump.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/V8ClientConnection.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/ImportHelper.h
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/arangosh.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/ImportHelper.cpp
+Added /home/sarroutbi/personal/PROG_EXP_UPM/TFE/src/arangodb/arangosh/V8Client/arangoimp.cpp
