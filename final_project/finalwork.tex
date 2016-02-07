@@ -311,6 +311,7 @@ Hay que ser claro en el código fuente. Para ello, el formato de los ficheros de
 Respecto al formato que debe poseer el código fuente, resulta razonable que éste siga una serie de reglas para favorecer su legibilidad:
 
 \begin{itemize}
+\item{Longitud de fichero}. Cuanto mayor es la longitud de un fichero mayor es la dificultad para entender su contenido\cite{unclebob:cleancode}. Existen recomendaciones que indican que más de 500 líneas de código por fichero empieza a ser poco recomendable. Sin embargo, existen herramientas como \textbf{cccc} que sugieren que la longitud de una clase no sea mayor de 2000 líneas, mientras que \textbf{Vera++} sugiere esta misma longitud como la longitud máxima de un fichero.
 \item{Anchura de líneas de código}. Tradicionalmente, la anchura de línea se limitaba a 80 (límite de Hollerith). Sin embargo, en la actualidad, con la anchura de los monitores actuales, anchuras de 100 y hasta 120 caracteres son razonables. Más de 120 caracteres de ancho empieza a ser ilegible.
 \item{Nombrado}. Se debe perseguir una correcta nomenclatura de las variables, clases y métodos. Deben perseguir un nombrado claro, que especifique de forma correcta el motivo de su existencia y clarifique la intención~\cite{unclebob:cleancode}. Nombres de variables con una única letra deben evitarse, más aún si son nombres que favorecen la confusión con números (i.e.: 'int l' ó 'int O', que pueden confundirse con los números 1 y 0 respectivamente). 
 \item{Indentación}. Se debe perseguir una correcta indentación del código fuente. Más allá del número de caracteres a usar, al menos se debe procurar no romper la indentación. También se encuentra desaconsejado el caracter tabulador, ya que se prefiere un número determinado de espacios en blanco.
@@ -465,6 +466,10 @@ En cuanto a las herramientas utilizadas para las métricas anteriores, se puede 
     \toprule
     \textbf{Métrica} & \textbf{Descripción} & \textbf{Especificación de Valoración} & \textbf{Valoración} \\
     \hline
+    HEI & Longitud de fichero en líneas de código & No existen ficheros con más de 2000 líneas & 5 \\ \cline{3-3} \cline{4-4}
+    & & Existen ficheros con más de 2000 líneas, pero ninguno es mayor de 4000 líneas & 3 \\ \cline{3-3}\cline{4-4}
+    & & Existen ficheros con más de 4000 líneas & 0 \\ \cline{3-3}\cline{4-4}
+    \hline
     WID & Anchura de líneas de código & No existen ficheros con líneas más anchas de 100 caracteres & 5 \\ \cline{3-3} \cline{4-4} 
     & & Existen ficheros con líneas de más de 100 caracteres, pero ningún fichero con más de 120 & 3 \\ \cline{3-3}\cline{4-4}
     & & Existen ficheros con líneas de más de 120 caracteres & 0 \\ \cline{3-3}\cline{4-4}
@@ -495,7 +500,7 @@ Respecto a las categorías propuestas en el modelo de calidad, no se han conside
 
 Así mismo, la ponderación de métricas será equivalente dentro de cada una de las categorías. Al igual que ocurre con éstas últimas, en la evaluación que haga cada rol en situaciones de evaluación de calidad, se deberán considerar aquellos aspectos que puedan hacer que una categoría sume más que otra y su ponderación sea mayor respecto a otras. Dicho esto, en esta evaluación no se ha considerado ninguna métrica con más ponderación interna en la categoría.
 
-Como puede observarse en la evaluación de los proyectos que se mostrará a continuación, para los diferentes proyectos evaluados, el proyecto que más puntuación obtiene es RethinkDB, 2.14. En segundo lugar aparece el proyecto ArangoDB, con una puntuación de 1.5, mientras que MongoDB obtiene una puntuación de 1.25. En la siguiente figura se muestra la comparativa de puntuación de los proyectos según las diversas categorías:
+Como puede observarse en la evaluación de los proyectos que se mostrará a continuación, para los diferentes proyectos evaluados, el proyecto que más puntuación obtiene es RethinkDB, 2.39. En segundo lugar aparece el proyecto ArangoDB, con una puntuación de 1.5, mientras que MongoDB obtiene una puntuación de 1.25. En la siguiente figura se muestra la comparativa de puntuación de los proyectos según las diversas categorías:
 
 \begin{center}
  \begin{figure}[H]
@@ -543,11 +548,13 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
     \midrule
     \multicolumn{5}{|c|}{\textbf{Métricas Formato de Código}}\\
     \hline
-    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 33.33\% & 0\\
+    Longitud de fichero en líneas de código & Existen ficheros con más de 4000 líneas & 0 & 25\% & 0\\ 
     \hline
-    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 33.33\% & 0\\
+    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 25\% & 0\\
     \hline
-    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 33.33\% & 0\\
+    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 25\% & 0\\
+    \hline
+    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 25\% & 0\\
     \midrule
     \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0}}\\
     \hline
@@ -595,11 +602,13 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
     \midrule
     \multicolumn{5}{|c|}{\textbf{Métricas Formato de Código}}\\
     \hline
-    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 33.33\% & 0\\
+    Longitud de fichero en líneas de código & Existen ficheros con más de 4000 líneas & 0 & 25\% & 0\\ 
     \hline
-    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 33.33\% & 0\\
+    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 25\% & 0\\
     \hline
-    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 33.33\% & 0\\
+    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 25\% & 0\\
+    \hline
+    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 25\% & 0\\
     \midrule
     \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0}}\\
     \hline
@@ -647,17 +656,19 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
     \midrule
     \multicolumn{5}{|c|}{\textbf{Métricas Formato de Código}}\\
     \hline
-    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 33.33\% & 0\\
+    Longitud de fichero en líneas de código & Existen ficheros con más de 2000 líneas, pero ninguno de más de 4000 líneas & 3 & 25\% & 0.75\\ 
     \hline
-    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 33.33\% & 0\\
+    Anchura de líneas de código & Existen ficheros con anchura mayor a 120 & 0 & 25\% & 0\\
     \hline
-    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 33.33\% & 0\\
+    Existencia de tabuladores & Existe código identado con tabuladores & 0 & 25\% & 0\\
+    \hline
+    Nombrado de variables & Existen variables con nombres como 'l' o 'O' & 0 & 25\% & 0\\
     \midrule
-    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0}}\\
+    \textbf{Puntuación} & \multicolumn{4}{c|}{\textbf{0.75}}\\
     \hline
-    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0}}\\   
+    \textbf{Puntuación ponderada (33.33\%)} & \multicolumn {4}{c|}{\textbf{0.25}}\\   
     \midrule
-    \multicolumn{5}{|c|}{\textbf{Puntuación total: 1.25 + 0.89 + 0 = \hl{2.14}}}\\
+    \multicolumn{5}{|c|}{\textbf{Puntuación total: 1.25 + 0.89 + 0.25 = \hl{2.39}}}\\
     \bottomrule
     \end{tabular}
     \caption{Puntuación Proyecto RethinkDB}
