@@ -262,7 +262,7 @@ Este principio establece que cuanto más estable es un paquete, mayor abstracci�
 D = \frac{(A+I-1)}{\sqrt(2)}
 \end{equation}
 
-Dicha distancia tiene un valor entre 0 y ${\frac{1}{\sqrt(2)}}$. Sin embargo, puede modificarse para dar un valor normalizado, conocido como D':
+Dicha distancia tiene un valor entre 0 y \begin{equation} \frac{1}{\sqrt(2)} \end{equation}. Sin embargo, puede modificarse para dar un valir normalizado, conocido como D':
 
 \begin{equation}
 D = |A+I-1|
@@ -489,6 +489,7 @@ En cuanto a las herramientas utilizadas para las métricas anteriores, se puede 
 Finalmente, para las métricas de código anteriores se puede utilizar la herramienta \textbf{Vera++}.
 
 \section{Un ejemplo práctico: MongoDB vs. rethinkdb vs. arangodb}
+\label{sec:quality_comparison}
 
 \subsection{Análisis de la calidad del código}
 
@@ -512,7 +513,7 @@ Como puede observarse en la evaluación de los proyectos que se mostrará a cont
  \end{figure}
 \end{center}
 
-La puntuación de cada uno de los proyectos, clasificadas por categorías, junto a las métricas de cada una de éstas y la ponderación de las mismas es la que se muestra a continuación \footnote{Pueden descargarse las hojas de cálculo en GitHub: https://github.com/sarroutbi/TFE.git, directorio ``evaluation sheets'' }:
+La puntuación de cada uno de los proyectos, clasificadas por categorías, junto a las métricas de cada una de éstas y la ponderación de las mismas es la que se muestra a continuación \footnote{Pueden descargarse las hojas de cálculo en GitHub: https://github.com/sarroutbi/TFE.git, directorio ``evaluation\_sheets'' }:
 
 \begin{table}[H]
   \begin{center}
@@ -676,13 +677,67 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
   \end{center}
 \end{table}
 
+\section{Estudio de calidad histórico en el tiempo}
+\label{sec:historic_quality}
+
+Como se pudo apreciar en el capítulo~\ref{sec:quality_comparison}, un modelo de calidad puede servir para establecer unas pautas a la hora de evaluar la calidad y comparar entre diversos proyectos según unos parámetros de calidad basados en métricas previamente establecidos.
+
+Sin embargo, este mismo modelo puede reaprovecharse para realizar el estudio de cómo ha sido la evolución de la calidad en un proyecto determinado, de forma que se pueda evaluar el progreso según el modelo planteado, y de esta forma revisar aquellos aspectos más relevantes a la hora de observar la progresión del proyecto en el tiempo, o, simplemente, observar cómo está siendo la evolución del proyecto en relación a los parámetros de calidad planteados.
+
+Se ha realizado este ejercicio para los proyectos anteriormente mencionados, de forma que se han estudiado los valores de calidad del modelo en períodos anteriores de tiempo, en concreto hace uno y dos años, para ver cómo está siendo la evolución según el modelo establecido. Puede observarse en la tabla~\ref{tab:historic_quality} los resultados obtenidos \footnote{Pueden descargarse las hojas de cálculo en GitHub: https://github.com/sarroutbi/TFE.git, directorio ``evaluation\_sheets''}.
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{ | p{2cm} | p{2cm} | p{2cm} | p {2cm} | p{2cm} | p{2cm} | }
+    \toprule
+    \multicolumn{6}{|c|}{\textbf{Evaluación Histórica Proyecto ArangoDB}}\\
+    \hline
+    \textbf{Proyecto} & \textbf{Fecha} & \textbf{Punt. OO.} & \textbf{Punt. Est.} & \textbf{Punt. Form.} & \textbf{Punt. Pond.}\\
+     \hline
+     ArangoDB & Enero 2016 & 1.17 & 0.33 & 0 & \textbf{1.5}\\
+     \hline
+     ArangoDB & Enero 2015 & 1.17 & 0.78 & 0 & \textbf{1.94}\\
+     \hline
+     ArangoDB & Enero 2014 & 1.33 & 0.78 & 0 & \textbf{2.11}\\
+     \hline
+     \midrule
+     \multicolumn{6}{|c|}{\textbf{Evaluación Histórica Proyecto MongoDB}}\\
+     \hline
+     \textbf{Proyecto} & \textbf{Fecha} & \textbf{Punt. OO.} & \textbf{Punt. Est.} & \textbf{Punt. Form.} & \textbf{Punt. Pond.}\\
+     \hline
+     MongoDB & Enero 2016 & 0.25 & 1 & 0 & \textbf{1.25}\\
+     \hline
+     MongoDB & Enero 2015 & 0.25 & 0.44 & 0 & \textbf{0.69}\\
+     \hline
+     MongoDB & Enero 2014 & 0.5 & 0.78 & 0 & \textbf{1.28}\\
+     \hline
+     \midrule
+     \multicolumn{6}{|c|}{\textbf{Evaluación Histórica Proyecto RethinkDB}}\\
+     \hline
+     \textbf{Proyecto} & \textbf{Fecha} & \textbf{Punt. OO.} & \textbf{Punt. Est.} & \textbf{Punt. Form.} & \textbf{Punt. Pond.}\\
+     \hline
+     RethinkDB & Enero 2016 & 1.25 & 1.22 & 0.25 & \textbf{2.72}\\
+     \hline
+     RethinkDB & Enero 2015 & 1.25 & 1 & 0.25 & \textbf{2.5}\\
+     \hline
+     RethinkDB & Enero 2014 & 1.08 & 1.22 & 0.42 & \textbf{2.72}\\
+    \bottomrule
+    \end{tabular}
+    \caption{Histórico de evaluación de calidad}
+    \label{tab:historic_quality}
+  \end{center}
+\end{table}
+
+Según se observa, el proyecto ArangoDB ha ido decrementando, de forma gradual en el tiempo, la calidad en función de nuestro modelo, lo que supone una mala progresión en base al modelo planteado, lo que puede significar una desatención dentro del proyecto a aquellos aspectos que dicho modelo considera importantes. Mientras, para el proyecto MongoDB, se observa que, pese a que hace un año tuvo un decremento considerable, coincidiendo con una fuerte reestructuración de la base de código, al menos, se han conseguido recuperar los parámetros de calidad de los que se disponía hace dos años. Finalmente, en lo relativo al proyecto RethinkDB, parece que los parámetros de calidad han estado siempre por encima de los otros proyectos históricamente, y no se ha producido ninguna variación considerable en el histórico de tiempo analizado.
+
 \section{Conclusiones}
+\label{sec:conclussions}
 
 La calidad del código fuente importa. Es clave para un proyecto de software que el código cumpla unos requisitos de calidad establecidos. Esta importancia se acentúa a la hora de evaluar proyectos de software libre, debido a la transparencia que supone la naturaleza de este tipo de proyectos, que por definición deben hacer que su código fuente sea accesible.
 
 A la hora de evaluar proyectos de software libre, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad de software libre utilizado. Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de Software Libre, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
 
-La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer preferencias de métricas y su impacto en la calidad final.
+La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer las métricas particulares, las preferencias de métricas para establecer las ponderaciones apropiadas y de esta forma adecuar su impacto en la calidad final.
 
 \section{Mejoras y posibles trabajos futuros}
 
