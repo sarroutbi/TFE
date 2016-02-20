@@ -96,7 +96,7 @@ pdfborder={0 0 0}
 
 \section{Introducción}
 
-Este documento es una aproximación al mundo de la calidad en el software y, más en concreto, en el código fuente del software libre. La calidad del software es medible, así como también lo es el código fuente que permite construir dicho software. Se define como calidad del software al campo de estudio que describe aquellos atributos de los productos software que son deseables.
+Este documento es una aproximación al mundo de la calidad en el software y, más en concreto, en el código Open Source. La calidad del software es medible, así como también lo es el código fuente que permite construir dicho software. Se define como calidad del software al campo de estudio que describe aquellos atributos de los productos software que son deseables.
 
 Para medir la calidad del código fuente, la utilización de las métricas es fundamental. Se conoce como métrica de software a aquella medida cuantitativa que permite conocer en qué grado un sistema, componente o proceso cumple un atributo determinado~\cite{ieeeglossary:softwareengineeringterminology}.
 
@@ -109,10 +109,10 @@ La pretensión de este documento es, en la medida de lo posible, y de forma grad
 \subsection{Objetivos}
 A continuación se definen los objetivos de este trabajo:
 \begin{itemize}
-\item{El objetivo de este documento es, en primer lugar, enumerar la existencia de algunos modelos de calidad en el software libre, exponiendo qué carencias muestran a la hora de analizar el código fuente}.
+\item{El objetivo de este documento es, en primer lugar, enumerar la existencia de algunos modelos de calidad en el software de tipo Open Source, exponiendo qué carencias muestran a la hora de analizar el código fuente}.
 \item{Tras ello, se propondrá la definición de un modelo de calidad propio que establezca métricas de análisis de código fuente que permitan comparar la calidad de proyectos Open Source y permita ponderar cada una de ellas en la evaluación del resultado final. La principal idea no es llegar a un método extremadamente eficiente o exhaustivo, sino más bien justificar la selección y ponderación de las diversas métricas en base a determinados criterios, de forma que se llegue a la personalización de un modelo de calidad propio para el código fuente. Esto permitirá, además, realizar un repaso por los conceptos más importantes relacionados con el diseño orientado a objetos (acoplamiento, cohesión, encapsulación, modularidad, jerarquía, herencia, etc.)}.
 \item{Por otro lado, se realizará el estudio, integración e implementación de las herramientas que permitan aglutinar las métricas definidas, así como ponderar cada una de las mismas, para llegar a una evaluación final. Se evaluarán las herramientas existentes en el estado del arte, se realizarán los pasos que permitan integrarlas entre sí y se implementará un mecanismo que permita su ejecución y sincronización. Se contemplarán, además, aquellas limitaciones existentes, cómo afectan al modelo de calidad establecido y, en qué forma, se podría modificar el modelo para ajustarlo a las herramientas disponibles y al estado del arte de las mismas}.
-\item{Finalmente, se realizará un ejemplo práctico de análisis de proyectos de software libre, de forma que se muestre la aplicación del método a través de las herramientas estudiadas para su comparativa. Así, se expondrá la comparativa entre diversos proyectos, de forma que se evalúen dos proyectos de similares características. Por otro lado, se establecerá el análisis para dos versiones de un mismo proyecto. Esto permitirá conocer la evolución de la calidad de un proyecto Open Source en el tiempo}.
+\item{Finalmente, se realizará un ejemplo práctico de análisis de proyectos Open Source, de forma que se muestre la aplicación del método a través de las herramientas estudiadas para su comparativa. Así, se expondrá la comparativa entre diversos proyectos, de forma que se evalúen dos proyectos de similares características. Por otro lado, se establecerá el análisis para dos versiones de un mismo proyecto. Esto permitirá conocer la evolución de la calidad de un proyecto Open Source en el tiempo}.
 \end{itemize}
 
 \subsection{Estructura del documento}
@@ -120,7 +120,7 @@ Para acometer los objetivos previamente descritos, este documento sigue la sigui
 
 \begin{enumerate}
 \item{\underline{Introducción}}. Se establecerá una introducción con un resumen de los contenidos del documento. Así se enumerarán en este apartado la misión del trabajo, los objetivos que éste pretende así como la estructura del presente documento.
-\item{\underline{Modelos de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos de software libre, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
+\item{\underline{Modelos de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos Open Source, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
 Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
 Finalmente, en este apartado se deberían describir las características que un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de éstas últimas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y por qué.
 \item{\underline{Herramientas}}. En este apartado se describirán aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. 
@@ -142,9 +142,9 @@ Por otro lado, se establecerán diversas métricas que son consideradas en la me
 
 Si bien a veces, aunque cada vez menos, los proyectos Open Source se consideran caóticos, no robustos, que no son utilizados por grandes compañías de software o que son, por naturaleza, proyectos que no disponen de soporte, está más que justificado que estas aseveraciones no son más que mitos en torno a este tipo de software~\cite{oreilly:tenmythsaboutopensourcesoftware}.
 
-El software Open Source, por estar más expuesto, posee igual o mejor calidad que el software privativo. Además, existen diversos modelos de calidad que permiten establecer la calidad de un proyecto de software libre, y sobre todo comparar la calidad contra otro proyecto de forma que el usuario disponga de información para decantarse en caso de que se tenga que tomar una decisión sobre el software libre que se va a utilizar.
+El software Open Source, por estar más expuesto, posee igual o mejor calidad que el software privativo. Además, existen diversos modelos de calidad que permiten establecer la calidad de un proyecto Open Source, y sobre todo comparar la calidad contra otro proyecto de forma que el usuario disponga de información para decantarse en caso de que se tenga que tomar una decisión sobre el proyecto que se va a utilizar.
 
-Obviamente, si bien los usuarios finales particulares no someten el software a un modelo de calidad para decantarse por un software libre u otro, y se basan más en una evaluación menos procedimental y más orientada a experiencia de usuario (basada en facilidad de uso, funcionalidad, etc.), sí que es cada vez más común, en el ámbito empresarial, enfrentar varios proyectos de software libre a un modelo de calidad establecido o bien a un modelo de calidad adaptado a las necesidades de la empresa para tomar la decisión de la adquisición final.
+Obviamente, si bien los usuarios finales particulares no someten el software a un modelo de calidad para decantarse por un software de tipo Open Source u otro, y se basan más en una evaluación menos procedimental y más orientada a experiencia de usuario (basada en facilidad de uso, funcionalidad, etc.), sí que es cada vez más común, en el ámbito empresarial, enfrentar varios proyectos Open Source a un modelo de calidad establecido o bien a un modelo de calidad adaptado a las necesidades de la empresa para tomar la decisión de la adquisición final.
 
 Si bien los objetivos de este documento no son realizar un estudio detallado de los modelos de calidad existentes en el software Open Source, sí que resulta interesante presentar dichos modelos para ver qué ofrecen, qué aspectos consideran importantes y qué tipo de evaluación llevan a cabo para establecer sus criterios de calidad.
 
@@ -219,7 +219,7 @@ Este método tiene como primera intención una automatización semi-completa del
 
 La metodología utilizada por este proyecto consistía básicamente en:
 \begin{enumerate}
-\item{\underline{Pasos Iniciales}}. En la primera etapa, se realizaron una serie de entrevistas con compañías y se identificaron las prioridades de las mismas a la hora de incorporar el uso corporativo de algún proyecto de software libre.
+\item{\underline{Pasos Iniciales}}. En la primera etapa, se realizaron una serie de entrevistas con compañías y se identificaron las prioridades de las mismas a la hora de incorporar el uso corporativo de algún proyecto Open Source.
 \item{\underline{Modelo Básico de Calidad}}. Este modelo establece una metodología GQM(Goal - Question - Metric) donde cada objetivo se divide en diversas preguntas y diversas métricas resultantes de las preguntas.
 \item{\underline{Consideraciones de la Comunidad}}. Finalmente, se establecen atributos indispensables desde el punto de vista de la comunidad, como el tamaño de la misma, la adecuación, la regeneración, carga de trabajo, etc.
 \end{enumerate}
@@ -383,7 +383,7 @@ Es deseable que las herramientas a analizar cumplan una serie de característica
 
 \begin{itemize}
 \item{\underline{Sencillez}}. El ámbito de este documento implica tener que realizar la evaluación de un modelo de calidad establecido que busca, entre otras características, la sencillez. Por tanto, es deseable que las herramientas a utilizar sobre las que se apoyará la evaluación de éste también lo sean.
-\item{\underline{Open Source}}. El hecho de que las herramientas sean software libre favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
+\item{\underline{Open Source}}. El hecho de que las herramientas sean Open Source favorece el uso libre de la herramienta, así como la libertad de modificación favorece su extensibilidad y la facilidad de realizar mejoras, sobre todo en vistas a trabajos futuros.
 \item{\underline{Automaticidad}}. Las herramientas utilizadas deben proporcionar mecanismos que favorezcan la automaticidad de su ejecución y de la extracción de los resultados.
 \item{\underline{Sistema Operativo Linux}}. Debido a sus características, que favorecen la automaticidad por su potente línea de comandos así como la disponibilidad de herramientas de Open Source empaquetadas y su fácil instalación, es recomendable que las herramientas estén disponibles en el Sistema Operativo Linux.
 \item{\underline{Lenguaje C++}}. Debido a los contenidos estudiados en la materia sobre la que versa este trabajo, el lenguaje requerido para el que se obtendrán las métricas deberá ser C++.
@@ -408,7 +408,7 @@ Respecto a las métricas que permite calcular que son de interés según lo come
 
 En cuanto a la salida de las métricas, está disponible en formato .html, en formato .xml y en formato CSV. Por tanto, la extracción de las métricas puede ser analizada con una nueva herramienta de sencillo desarrollo.
 
-La principal desventaja a la hora de utilizar esta herramienta es la no continuación de su desarrollo, puesto que parece que, lamentable, en 2013, su desarrollador principal dejó de mantenerla.
+La principal desventaja a la hora de utilizar esta herramienta es la no continuación de su desarrollo, puesto que parece que, lamentable, en 2013, su desarrollador principal dejó de mantenerla. Por tanto, para este trabajo, se han tenido que realizar parches a la herramienta, debido a distintos problemas detectados en la ejecución de la misma.
 
 \subsection{cppdepend}
 
@@ -434,7 +434,7 @@ La herramienta cppcheck~\cite{metrictools:cppcheck} permite realizar análisis e
 
 La herramienta Open Source Vera++~\cite{metrictools:veraplusplus} permite verificar y analizar código fuente en el lenguaje de programación C++. Esta herramienta tiene definida una serie de reglas que permiten validad el formato del código. El análisis realizado por la herramienta es sobre todo relacionado con el formato del código, ya que comprueba, entre otras, la longitud de los ficheros, la anchura de las líneas o el nombrado de las variables.
 
-La herramienta funciona en modo comando, y extender su funcionalidad a través de nuevas reglas o reprogramando las ya existentes es muy simple, lo que favorece su extensibilidad.
+La herramienta funciona en modo comando, y extender su funcionalidad a través de nuevas reglas o reprogramando las ya existentes es muy simple, lo que favorece su extensibilidad. A modo de ejemplo, para este trabajo, se han modificado los perfiles para ejecutar únicamente ciertas reglas y de esta forma evaluar únicamente las métricas descritas en el capítulo~\ref{sec:quality_model}.
 
 \subsection{SonarQube}
 
@@ -442,9 +442,10 @@ SonarQube~\cite{metrictools:sonarqube} es una potente herramienta para la medici
 
 SonarQube es una herramienta desarrollada como Open Source, que permite ser extendida a través de plugins, y que tiene una gran base de usuarios. Entre las posibles desventajas de este software, básicamente se encuentra el hecho de que la curva de aprendizaje es algo más pronunciada comparada con las herramientas anteriores. Finalmente, comentar que si bien no posee comandos específicos de uso desde la shell para la lectura de resultados, el hecho de que utilice una base de datos permite automatizar la extracción de métricas, así como su análisis y clasificación.
 
-Dicho lo anterior, cabe destacar que SonarQube, en relación al lenguaje de programación C++, actúa más como un framework de visualización que como una herramienta. Así, su uso está más relacionado con la visualización de datos que con la propia generación de métricas.
+Dicho lo anterior, cabe destacar que SonarQube, en relación al lenguaje de programación C++, actúa más como un framework de visualización que como una herramienta. Así, su uso está más relacionado con la visualización de datos que con la propia generación de métricas. En este trabajo se ha utilizado el API que proporciona SonarQube contra la herramienta Vera++ para analizar las métricas que ésta última proporciona.
 
 \section{Propuesta de Modelo de Calidad}
+\label{sec:quality_model}
 
 Una vez enumeradas las distintas herramientas disponibles, la funcionalidad que proporcionan y sus principales características, se ha realizado la siguiente propuesta de modelo de calidad. El enfoque seguido ha sido un enfoque iterativo e incremental, en el que para las primeras iteraciones se ha realizado un análisis de las métricas de manera manual a través de una única herramienta, que en este caso ha sido \textbf{cccc}.
 
@@ -781,14 +782,25 @@ Se ha realizado este ejercicio para los proyectos anteriormente mencionados, de 
   \end{center}
 \end{table}
 
-Según se observa, el proyecto ArangoDB ha ido decrementando, de forma gradual en el tiempo, la calidad en función de nuestro modelo, lo que supone una mala progresión en base al modelo planteado, lo que puede significar una desatención dentro del proyecto a aquellos aspectos que dicho modelo considera importantes. Mientras, para el proyecto MongoDB, se observa que, pese a que hace un año tuvo un decremento considerable, coincidiendo con una fuerte reestructuración de la base de código, al menos, se han conseguido recuperar los parámetros de calidad de los que se disponía hace dos años. Finalmente, en lo relativo al proyecto RethinkDB, parece que los parámetros de calidad han estado siempre por encima de los otros proyectos históricamente, y no se ha producido ninguna variación considerable en el histórico de tiempo analizado.
+Según se observa en la figura~\ref{fig:quality_progression}, el proyecto ArangoDB ha ido decrementando, de forma gradual en el tiempo, la calidad en función del modelo planteado, lo que supone una mala progresión en base a las métricas definidas, lo que puede significar una desatención dentro del proyecto a aquellos aspectos que dicho modelo considera importantes. Mientras, para el proyecto MongoDB, se observa que, pese a que hace un año tuvo un decremento considerable, coincidiendo con una fuerte reestructuración de la base de código, al menos, se han conseguido recuperar los parámetros de calidad de los que se disponía hace dos años. Finalmente, en lo relativo al proyecto RethinkDB, parece que los parámetros de calidad han estado siempre por encima de los otros proyectos históricamente, y no se ha producido ninguna variación considerable en el histórico de tiempo analizado.
+
+\begin{center}
+ \begin{figure}[H]
+ \begin{center}
+   \includegraphics[width=16cm]{img/quality_progress.png}
+   \caption{Comparativa de Histórico de Calidad}
+   \label{fig:quality_progression}
+ \end{center}
+ \end{figure}
+\end{center}
+
 
 \section{Conclusiones}
 \label{sec:conclussions}
 
-La calidad del código fuente importa. Es clave para un proyecto de software que el código cumpla unos requisitos de calidad establecidos. Esta importancia se acentúa a la hora de evaluar proyectos de software libre, debido a la transparencia que supone la naturaleza de este tipo de proyectos, que por definición deben hacer que su código fuente sea accesible.
+La calidad del código fuente importa. Es clave para un proyecto de software que el código cumpla unos requisitos de calidad establecidos. Esta importancia se acentúa a la hora de evaluar proyectos Open Source, debido a la transparencia que supone la naturaleza de este tipo de proyectos, que por definición deben hacer que su código fuente sea accesible.
 
-A la hora de evaluar proyectos de software libre, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad de software libre utilizado. Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de proyectos Open Source, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
+A la hora de evaluar proyectos Open Source, la decisión de adquisición de alguna solución debe llevar asociado un estudio de la calidad del código fuente unido al modelo de calidad utilizado. Establecer modelos de calidad basados en métricas debe afrontarse como un ejercicio primordial en el desarrollo y/o evaluación de proyectos Open Source, y su evaluación durante el proceso de desarrollo debe llevarse a cabo de forma iterativa para detectar posibles riesgos, estudiar medidas de contingencia e integrar un proceso de mejora continua en el código fuente.
 
 La existencia de las herramientas que han sido enumeradas en este documento permite acelerar la definición de modelos de calidad de software, pero es también imprescindible analizar las condiciones particulares de cada proyecto para establecer las métricas particulares, las preferencias de métricas para establecer las ponderaciones apropiadas y de esta forma adecuar su impacto en la calidad final.
 
@@ -798,7 +810,7 @@ Como posibles mejoras se han identificado una serie de acciones que se pueden ll
 \begin{enumerate}
 \item{\underline{Modificación de herramientas para extracción de métricas}}. La utilización de herramientas de tipo Open Source abre la puerta a la extensión y/o mejora de éstas. Por ejemplo, se podría estudiar la extensión de \textbf{cccc} para hacer configurables los valores de ciertas métricas, ya que algunas de ellas son demasiado permisivas, como puede ser el número de métodos por clase. También se podría extender el tipo de métricas que esta herramienta proporciona.
 Igualmente, cabe la posibilidad de extender la herramienta \textbf{Vera++} para incluir nuevas métricas de formato de código, como pueda ser la utilización de variables de menos de N letras, y no ceñirse únicamente a la evaluación de nombres confusos.
-\item{\underline{Extensión del modelo de calidad}}. En otro orden de cosas, como mejora adicional, podría extenderse el modelo de calidad con más categorías y/o más métricas dentro de cada categoría, mediante la utilización de otras herramientas no contempladas en este documento, o bien a través de las modificaciones enumeradas en el punto anterior.
+\item{\underline{Extensión del modelo de calidad}}. En otro orden de cosas, como mejora adicional, podría extenderse el modelo de calidad con más categorías y/o más métricas por categoría, mediante la utilización de otras herramientas no contempladas en este documento, o bien a través de las modificaciones enumeradas en el punto anterior.
 \item{\underline{Automatización}}. Finalmente, pese a que para la selección de las herramientas se ha considerado la facilidad de uso de éstas para permitir la automatización de la extracción de las métricas, no se ha realizado dicha automatización como parte de este proyecto. Se propone, por tanto, como posible mejora, la realización de un framework que automatice total o parcialmente la obtención de las métricas y la generación de las puntuaciones del modelo de calidad.
 \end{enumerate}
 
