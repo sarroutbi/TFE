@@ -133,7 +133,9 @@ En concreto, se realizará la comparativa entre bases de datos NoSQL escritas en
 \item{\underline{Mejoras y posibles trabajos futuros}}. Finalmente, dentro de esta sección, se recogerán mejoras y posibles trabajos futuros que se podrían realizar para mejorar o extender lo que se haya realizado en este proyecto. Se contemplarán, por tanto, opciones de extender el modelo de calidad con más métricas, o bien incluir aspectos que no se han contemplado, extender el modelo para más lenguajes de programación, etc.
 \end{enumerate}
 
-\section{Modelo de Calidad}
+\pagebreak
+
+\section{Modelos de Calidad}
 En esta sección se pretende llegar a un modelo de calidad, basado en métricas, que permita realizar la comparación entre dos o más proyectos Open Source, o el estado de uno proyecto a lo largo del tiempo. Así, se estudiará el estado del arte de los modelos de calidad en proyectos Open Source más utilizados en la actualidad, para ver si se pueden utilizar en su totalidad, o, al menos, de forma parcial.
 
 Por otro lado, se establecerán diversas métricas que son consideradas en la medición de la calidad de software, tanto desde el punto de vista de programación funcional, como, sobre todo, en el software diseñado en base a orientación a objetos. Además de enumerar las métricas más importantes, se realizará la categorización y priorización de las mismas. Esto permitirá establecer un modelo de calidad en base a métricas según la categorización establecida.
@@ -343,9 +345,7 @@ Si bien no se definen métricas específicas, sí que pueden establecerse, por e
 
 \subsubsection{Número de parámetros por método}
 
-Cuanto menor es el número de argumentos de una función, mejor es la comprensión de ésta, ya que los argumentos conllevan un esfuerzo comprensivo. Funciones de más de tres argumentos deben evitarse, y las que tienen más de tres deben ser evitadas o muy justificadas.
-
-La métrica es sencilla, puesto que a menor número de argumentos, mejor.
+Cuanto menor es el número de argumentos de una función, mejor es la comprensión de ésta, ya que los argumentos conllevan un esfuerzo comprensivo. Funciones de más de tres argumentos deben evitarse, y las que tienen más de tres deben ser evitadas o muy justificadas. La métrica es sencilla, puesto que a menor número de argumentos, mejor.
 
 \subsubsection{Complejidad Ciclomática}
 
@@ -357,9 +357,7 @@ Cuanto mayor complejidad ciclomática posee el código, menor será su mantenibi
 
 Pese a que no hay una justificación razonable sobre la longitud que deben poseer los métodos, muchos autores, basados en su experiencia, recomiendan que cuanto menor sea la longitud de un método mejor será su comprensión y su mantenibilidad~\cite{unclebob:cleancode}.
 
-Si bien un método no tiene porqué ser excesivamente complejo por ser muy largo (un método de 200 líneas puede, por ejemplo, tener complejidad ciclomática 1), parece razonable que se parta la funcionalidad de dicho código en métodos más pequeños para mejorar su legibilidad. 
-
-Por tanto, el número de líneas de un método puede establecerse también como una métrica que posea un valor que cuanto menor sea, mejor.
+Si bien un método no tiene porqué ser excesivamente complejo por ser muy largo (un método de 200 líneas puede, por ejemplo, tener complejidad ciclomática 1), parece razonable que se parta la funcionalidad de dicho código en métodos más pequeños para mejorar su legibilidad. Por tanto, el número de líneas de un método puede establecerse también como una métrica que posea un valor que cuanto menor sea, mejor.
 
 \subsubsection{Formato de código fuente}
 
@@ -372,6 +370,8 @@ Respecto al formato que debe poseer el código fuente, resulta razonable que és
 \item{\underline{Nombrado}}. Se debe perseguir una correcta nomenclatura de las variables, clases y métodos. Deben perseguir un nombrado claro, que especifique de forma correcta el motivo de su existencia y clarifique la intención~\cite{unclebob:cleancode}. Nombres de variables con una única letra deben evitarse, más aún si son nombres que favorecen la confusión con números (i.e.: 'int l' ó 'int O', que pueden confundirse con los números 1 y 0 respectivamente). 
 \item{\underline{Indentación}}. Se debe perseguir una correcta indentación del código fuente. Más allá del número de caracteres a usar, al menos se debe procurar no romper la indentación. También se encuentra desaconsejado el carácter tabulador, ya que se prefiere un número determinado de espacios en blanco.
 \end{itemize}
+
+\pagebreak
 
 \section{Herramientas}
 
@@ -443,6 +443,8 @@ SonarQube~\cite{metrictools:sonarqube} es una potente herramienta para la medici
 SonarQube es una herramienta desarrollada como Open Source, que permite ser extendida a través de plugins, y que tiene una gran base de usuarios. Entre las posibles desventajas de este software, básicamente se encuentra el hecho de que la curva de aprendizaje es algo más pronunciada comparada con las herramientas anteriores. Finalmente, comentar que si bien no posee comandos específicos de uso desde la shell para la lectura de resultados, el hecho de que utilice una base de datos permite automatizar la extracción de métricas, así como su análisis y clasificación.
 
 Dicho lo anterior, cabe destacar que SonarQube, en relación al lenguaje de programación C++, actúa más como un framework de visualización que como una herramienta. Así, su uso está más relacionado con la visualización de datos que con la propia generación de métricas. En este trabajo se ha utilizado el API que proporciona SonarQube contra la herramienta Vera++ para analizar las métricas que ésta última proporciona.
+
+\pagebreak
 
 \section{Propuesta de Modelo de Calidad}
 \label{sec:quality_model}
@@ -541,6 +543,8 @@ En cuanto a las herramientas utilizadas para las métricas descritas en la Tabla
 \end{table}
 
 Finalmente, para las métricas de código descritas en la Tabla~\ref{tab:metrics_format} se puede utilizar la herramienta \textbf{Vera++}.
+
+\pagebreak
 
 \section{Un ejemplo práctico: MongoDB vs. RethinkDB vs. ArangoDB}
 \label{sec:quality_comparison}
@@ -731,6 +735,8 @@ La puntuación de cada uno de los proyectos, clasificadas por categorías, junto
   \end{center}
 \end{table}
 
+\pagebreak
+
 \section{Evaluación de histórico de calidad en el tiempo}
 \label{sec:historic_quality}
 
@@ -794,6 +800,7 @@ Según se observa en la figura~\ref{fig:quality_progression}, el proyecto Arango
  \end{figure}
 \end{center}
 
+\pagebreak
 
 \section{Conclusiones}
 \label{sec:conclussions}
