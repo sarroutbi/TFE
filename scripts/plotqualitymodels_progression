@@ -1,0 +1,15 @@
+#!/usr/bin/gnuplot
+
+set title "Progresión en el Tiempo"
+ArangoDB = "#99ffff"; MongoDB = "#4671d5"; RethinkDB = "#ff0000"
+set auto x
+set yrange [0:3]
+set style data histogram
+set style histogram cluster gap 1
+set style fill solid border -1
+set  terminal png truecolor font 'Verdana,20' size 1800,1400
+set output "quality_progress.png"
+set boxwidth 1 
+set xtic scale 0
+# 2, 3, 4 are the indexes of the columns; 'fc' stands for 'fillcolor'
+plot 'quality_models_progression.txt' using 2:xtic(1) ti col fc rgb ArangoDB, '' u 3 ti col fc rgb MongoDB, '' u 4 ti col fc rgb RethinkDB

@@ -1,0 +1,4 @@
+Title        ArangoDB MongoDB RethinkDB
+"Enero 2014"   2.11     1.28    2.72
+"Enero 2015"   1.94     0.69    2.50
+"Enero 2016"   1.50     1.25    2.72
