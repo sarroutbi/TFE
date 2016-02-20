@@ -122,14 +122,14 @@ Para acometer los objetivos previamente descritos, este documento sigue la sigui
 \item{\underline{Introducción}}. Se establecerá una introducción con un resumen de los contenidos del documento. Así se enumerarán en este apartado la misión del trabajo, los objetivos que éste pretende así como la estructura del presente documento.
 \item{\underline{Modelos de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos Open Source, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
 Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
-Finalmente, en este apartado se deberían describir las características que un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de éstas últimas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y por qué.
+Finalmente, en este apartado se describirán las características que un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de éstas últimas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y por qué.
 \item{\underline{Herramientas}}. En este apartado se describirán aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. 
 Además, se mostrarán diversas gráficas y/o reportes comparativos de la calidad del código para un determinado proyecto. Así, se podrá mostrar de forma gráfica una comparativa de aquellas métricas más determinantes del sujeto a analizar.
 Este apartado permitirá ver el estado del arte de las herramientas de análisis de métricas para, de esta forma, empezar a establecer cuáles de ellas se van a utilizar a la hora de establecer el modelo de calidad propuesto.
 \item{\underline{Propuesta de un modelo de calidad}}. Esta sección permitirá establecer, en base a los dos capítulos anteriores, un modelo de calidad de software orientado a métricas. De esta forma se elaborará un modelo, iterativo e incremental, que permitirá establecer las métricas a evaluar, las herramientas que permitan dicha evaluación y la ponderación de cada una de las métricas y/o grupos de métricas.
 \item{\underline{Caso práctico: MongoDB vs. RethinkDB vs. ArangoDB}}. En este apartado se realizará el análisis de dos o más proyectos Open Source, de un tamaño similar en líneas de código, escritos en C++. De esta forma, se podrán concretar los aspectos vistos anteriormente en una comparativa real.
 En concreto, se realizará la comparativa entre bases de datos NoSQL escritas en C++, como son MongoDB, RethinkDB y ArangoDB.
-\item{\underline{Evaluación de histórico de calidad en el tiempo}}. Este apartado detallará la evaluación de los proyectos anteriormente descritos en un período de tiempo determinado, con el fin de conocer cómo ha sido dicha evolución en función del modelo de calidad planteado.
+\item{\underline{Evaluación de histórico de calidad en el tiempo}}. En este apartado se detallará la evaluación de los proyectos anteriormente descritos en un período de tiempo determinado, con el fin de conocer cómo ha sido dicha evolución en función del modelo de calidad planteado.
 \item{\underline{Mejoras y posibles trabajos futuros}}. Finalmente, dentro de esta sección, se recogerán mejoras y posibles trabajos futuros que se podrían realizar para mejorar o extender lo que se haya realizado en este proyecto. Se contemplarán, por tanto, opciones de extender el modelo de calidad con más métricas, o bien incluir aspectos que no se han contemplado, extender el modelo para más lenguajes de programación, etc.
 \end{enumerate}
 
@@ -197,7 +197,7 @@ Como puede observarse en la descripción de las categorías, si bien este modelo
 
 Por tanto, si bien OpenBRR no realiza un análisis de métricas de código fuente, su filosofía y la fácil implementación de métricas que el modelo propone pueden servir perfectamente en la evaluación del modelo de calidad del código fuente.
 
-\item{\underline{QSOS}~\cite{qsos:qsos} (Qualification and Selection of Opensource Software}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. Básicamente, este manifiesto establece una serie de puntos que definen el modelo de calidad, resumidos en los siguientes objetivos principales:
+\item{\underline{QSOS}~\cite{qsos:qsos} (Qualification and Selection of Opensource Software)}. Modelo de calidad ligero cuya especificación se establece en el ``QSOS Manifesto''. Básicamente, este manifiesto establece una serie de puntos que definen el modelo de calidad, resumidos en los siguientes objetivos principales:
 \begin{enumerate}
 \item{Análisis de necesidades y limitaciones en la adopción del software}.
 \item{Evaluación funcional y de requisitos técnicos}.
@@ -293,8 +293,8 @@ I = \frac{Ce}{Ca + Ce}
 
 Donde:
 \begin{itemize}
-\item{\underline{Ca}}: Es el número de clases, fuera del paquete a evaluar, que tienen dependencia con clases del paquete a evaluar
-\item{\underline{Ce}}: Es el número de clases, dentro del paquete a evaluar, que tienen dependencia con clases externas del paquete a evaluar
+\item{\underline{Ca}}: Es el número de clases, fuera del paquete a evaluar, que tienen dependencia con clases del paquete a evaluar.
+\item{\underline{Ce}}: Es el número de clases, dentro del paquete a evaluar, que tienen dependencia con clases externas del paquete a evaluar.
 \end{itemize}
 
 Hay que destacar que la inestabilidad no es una característica a evitar, ya que si todos los paquetes fueran estables, el código sería difícil de modificar, algo que no es deseable. Simplemente hay que establecer en qué medida una clase estable debe cumplir otras características, como la abstracción, según se verá a continuación.
@@ -321,7 +321,7 @@ D = \frac{(A+I-1)}{\sqrt(2)}
 Dicha distancia tiene un valor entre 0 y $\frac{1}{\sqrt(2)}$. Sin embargo, puede modificarse para dar un valor normalizado, conocido como D':
 
 \begin{equation}
-D = |A+I-1|
+D' = |A+I-1|
 \end{equation}
 
 Si la distancia es cero, los paquetes pueden considerarse fácilmente reusables y modificables. Si un paquete se aleja del valor Distancia igual a cero, entonces el paquete debe ser reestructurado.
@@ -408,7 +408,7 @@ Respecto a las métricas que permite calcular que son de interés según lo come
 
 En cuanto a la salida de las métricas, está disponible en formato .html, en formato .xml y en formato CSV. Por tanto, la extracción de las métricas puede ser analizada con una nueva herramienta de sencillo desarrollo.
 
-La principal desventaja a la hora de utilizar esta herramienta es la no continuación de su desarrollo, puesto que parece que, lamentable, en 2013, su desarrollador principal dejó de mantenerla. Por tanto, para este trabajo, se han tenido que realizar parches a la herramienta, debido a distintos problemas detectados en la ejecución de la misma.
+La principal desventaja a la hora de utilizar esta herramienta es la no continuación de su desarrollo, puesto que parece que, lamentablemente, en 2013, su desarrollador principal dejó de mantenerla. Por tanto, para este trabajo, se han tenido que realizar parches a la herramienta, debido a distintos problemas detectados en la ejecución de la misma.
 
 \subsection{cppdepend}
 
