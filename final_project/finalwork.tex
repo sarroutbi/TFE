@@ -120,7 +120,7 @@ Para acometer los objetivos previamente descritos, este documento sigue la sigui
 
 \begin{enumerate}
 \item{\underline{Introducción}}. Se establecerá una introducción con un resumen de los contenidos del documento. Así se enumerarán en este apartado la misión del trabajo, los objetivos que éste pretende así como la estructura del presente documento.
-\item{\underline{Modelos de Calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos Open Source, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
+\item{\underline{Modelos de calidad}}. Como primera aproximación, en este apartado se introducirán los modelos de calidad ya existentes para proyectos Open Source, como OpenBRR, QSOS o QualOSS. Estos modelos, sin embargo, no realizan un análisis avanzado del estado del código y la calidad del mismo, si bien sí que analizan aspectos relacionados con la calidad del código, al menos, indirectamente, como el número de BUGS.
 Hilando con esto, se enumerarán distintas métricas que son importantes a la hora de establecer calidad en el software, como por ejemplo desde el número de métodos por clase, número de atributos por clase, dependencias con otras clases, número de parámetros por método o complejidad ciclomática.
 Finalmente, en este apartado se describirán las características que un modelo de calidad basado en métricas software del estilo de OpenBRR pero enfocado única y exclusivamente al análisis de éstas últimas, con una ponderación que permita establecer la calidad y una justificación de la misma, en cuanto a qué métricas son consideradas más importantes y por qué.
 \item{\underline{Herramientas}}. En este apartado se describirán aquellas herramientas que permiten obtener una o varias de las métricas anteriores, y cómo se pueden combinar dichas herramientas para llegar a la evaluación de calidad final. Se contemplarán, igualmente, herramientas de desarrollo propio o adaptaciones a herramientas ya existentes. 
@@ -135,7 +135,7 @@ En concreto, se realizará la comparativa entre bases de datos NoSQL escritas en
 
 \pagebreak
 
-\section{Modelos de Calidad}
+\section{Modelos de calidad}
 En esta sección se pretende llegar a un modelo de calidad, basado en métricas, que permita realizar la comparación entre dos o más proyectos Open Source, o el estado de uno proyecto a lo largo del tiempo. Así, se estudiará el estado del arte de los modelos de calidad en proyectos Open Source más utilizados en la actualidad, para ver si se pueden utilizar en su totalidad, o, al menos, de forma parcial.
 
 Por otro lado, se establecerán diversas métricas que son consideradas en la medición de la calidad de software, tanto desde el punto de vista de programación funcional, como, sobre todo, en el software diseñado en base a orientación a objetos. Además de enumerar las métricas más importantes, se realizará la categorización y priorización de las mismas. Esto permitirá establecer un modelo de calidad en base a métricas según la categorización establecida.
@@ -446,7 +446,7 @@ Dicho lo anterior, cabe destacar que SonarQube, en relación al lenguaje de prog
 
 \pagebreak
 
-\section{Propuesta de Modelo de Calidad}
+\section{Propuesta de Modelo de calidad}
 \label{sec:quality_model}
 
 Una vez enumeradas las distintas herramientas disponibles, la funcionalidad que proporcionan y sus principales características, se ha realizado la siguiente propuesta de modelo de calidad. El enfoque seguido ha sido un enfoque iterativo e incremental, en el que para las primeras iteraciones se ha realizado un análisis de las métricas de manera manual a través de una única herramienta, que en este caso ha sido \textbf{cccc}.
@@ -455,7 +455,7 @@ Hay que destacar que, por facilidad a la hora de analizar los datos, algunos val
 
 En posteriores iteraciones, se han ido incorporando herramientas que han permitido ampliar el modelo de calidad y, por tanto, hacer que éste sea más completo. Además, se han ido incluyendo herramientas de scripting para automatizar la ejecución de los comandos sobre el código fuente.
 
-\subsection{Modelo de Calidad Propuesto}
+\subsection{Modelo de calidad propuesto}
 
 Se ha establecido un modelo de calidad basado en tres distintas categorías para evaluar el código fuente. Dichas categorías son el Diseño Orientado a Objetos, la Calidad Estructural y la Calidad del Formato del Código. A continuación se propondrán las diversas tablas que especifican cada una de las categorías:
 
